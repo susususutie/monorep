@@ -6,16 +6,20 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/my-lib.umd.cjs",
-  "module": "./dist/my-lib.js",
+  "main": "./distindex.cjs",
+  "module": "./dist/index.js",
   "exports": {
     ".": {
-      "import": "./dist/my-lib.js",
-      "require": "./dist/my-lib.umd.cjs"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
-    "./secondary": {
-      "import": "./dist/secondary.js",
-      "require": "./dist/secondary.cjs"
+    "./MyButton": {
+      "import": "./dist/MyButton.js",
+      "require": "./dist/MyButton.cjs"
+    },
+    "./MyTitle": {
+      "import": "./dist/MyTitle.js",
+      "require": "./dist/MyTitle.cjs"
     }
   },
   "scripts": {

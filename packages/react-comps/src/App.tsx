@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Demo } from "./comps";
+import { MyButton } from "./comps";
 
 function App() {
   return (
     <div>
-      <Demo />
+      <MyButton> MyButton </MyButton>
     </div>
   );
 }
