@@ -6,7 +6,7 @@
   "files": [
     "dist"
   ],
-  "main": "./distindex.cjs",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "exports": {
     ".": {
@@ -23,25 +23,29 @@
     }
   },
   "scripts": {
+    "build": "tsc && rollup -c rollup.config.js",
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build:dep": "tsc && vite build",
     "preview": "vite preview"
   },
-  "dependencies": {
-    "lodash-es": "^4.17.21",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
   "devDependencies": {
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-terser": "^0.4.0",
     "@types/node": "^18.14.2",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react-swc": "^3.0.0",
     "antd": "^5.2.3",
+    "rollup": "^3.18.0",
+    "rollup-plugin-typescript2": "^0.34.1",
+    "tslib": "^2.5.0",
     "typescript": "^4.9.5",
-    "vite": "^4.1.4"
+    "vite": "^4.1.4",
+    "vite-plugin-dts": "^2.0.2"
   },
   "optionalDependencies": {
-    "antd": "^5.2.3"
+    "antd": "^5.2.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
