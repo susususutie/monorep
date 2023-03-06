@@ -1,8 +1,12 @@
 // 压缩代码(去除空格, 变量名简写等)
 import terser from "@rollup/plugin-terser";
-
 // 支持引入json资源
 import json from "@rollup/plugin-json";
+//
+import dts from "rollup-plugin-dts";
+import typescript2 from "rollup-plugin-typescript2";
+import resolve from "rollup-plugin-node-resolve";
+import commonjs from "rollup-plugin-commonjs";
 
 import { readFileSync, readdirSync } from "fs";
 const pkg = JSON.parse(
@@ -18,46 +22,74 @@ const entry = readdirSync(new URL("./src", import.meta.url));
  */
 function createConf(entry) {
   let filename, path;
-  if (/\.js/.test(entry)) {
-    filename = entry.replace(/\.js/, "");
+  if (/\.ts/.test(entry)) {
+    filename = entry.replace(/\.ts/, "");
     path = "";
   } else {
     filename = "index";
     path = entry;
   }
 
-  const input = `./src/${path}/${filename}.js`.replace(/\/\//, "/");
+  const input = `./src/${path}/${filename}.ts`.replace(/\/\//, "/");
   console.log(entry, input);
 
-  return {
-    input, // 入口文件
-    output: [
-      {
-        format: "umd",
-        // 导出多个还是导出一个, 不建议混用:
-        // named:   具名导出, 多个
-        // default: 默认导出, 一个
-        exports: "named",
-        name: "SutieUtils", // window.SutieUtils
-        file: `./umd/${path || filename}.js`.replace(/\/\//, "/"),
-      },
-      {
-        format: "es",
-        exports: "named",
-        file: `./es/${path || filename}.js`.replace(/\/\//, "/"),
-      },
-      {
-        format: "cjs",
-        exports: "named",
-        file: `./cjs/${path || filename}.cjs`.replace(/\/\//, "/"),
-        // 插件可以写在 output 针对某一种输出生效
-        // plugins: [terser()],
-      },
-    ],
+  return [
+    // {
+    //   input,
+    //   output: [
+    //     {
+    //       format: "es",
+    //       exports: "named",
+    //       file: `./es/${path || filename}.d.ts`.replace(/\/\//, "/"),
+    //     },
+    //   ],
+    //   plugins: [resolve(), commonjs(), json(), typescript2()],
+    // },
+    {
+      input, // 入口文件
+      output: [
+        {
+          format: "umd",
+          // 导出多个还是导出一个, 不建议混用:
+          // named:   具名导出, 多个
+          // default: 默认导出, 一个
+          exports: "named",
+          name: "SutieUtils", // window.SutieUtils
+          file: `./umd/${path || filename}.js`.replace(/\/\//, "/"),
+        },
+        {
+          format: "es",
+          exports: "named",
+          file: `./es/${path || filename}.js`.replace(/\/\//, "/"),
+        },
+        {
+          format: "es",
+          exports: "named",
+          file: `./es/${path || filename}.d.ts`.replace(/\/\//, "/"),
+        },
+        {
+          format: "cjs",
+          exports: "named",
+          file: `./cjs/${path || filename}.cjs`.replace(/\/\//, "/"),
+          // 插件可以写在 output 针对某一种输出生效
+          plugins: [terser()],
+        },
+      ],
 
-    // 插件也可以对所有输出生效
-    plugins: [terser(), json()],
-  };
+      // 插件也可以对所有输出生效
+      plugins: [
+        resolve(),
+        commonjs(),
+        json(),
+        typescript2({
+          tsconfigOverride: {
+            declaration: true,
+            emitDeclarationOnly: true,
+          },
+        }),
+      ],
+    },
+  ];
 }
 
 // console.log(
@@ -68,7 +100,7 @@ function createConf(entry) {
 //   )
 // );
 
-export default entry.map((name) => createConf(name));
+export default entry.map((name) => createConf(name)).flat();
 
 /**
  * output.exports

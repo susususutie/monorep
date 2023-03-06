@@ -50,10 +50,16 @@ importers:
       '@rollup/plugin-json': ^6.0.0
       '@rollup/plugin-terser': ^0.4.0
       rollup: ^3.18.0
+      rollup-plugin-typescript2: ^0.34.1
+      tslib: ^2.5.0
+      typescript: ^4.9.5
     devDependencies:
       '@rollup/plugin-json': 6.0.0_rollup@3.18.0
       '@rollup/plugin-terser': 0.4.0_rollup@3.18.0
       rollup: 3.18.0
+      rollup-plugin-typescript2: 0.34.1_fn2onl6nbsljlgjr3jlzr6w7we
+      tslib: 2.5.0
+      typescript: 4.9.5
 
   packages/vue-comps:
     specifiers:
