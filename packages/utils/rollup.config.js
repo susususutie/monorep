@@ -1,6 +1,9 @@
 // 压缩代码(去除空格, 变量名简写等)
 import terser from "@rollup/plugin-terser";
 
+// 支持引入json资源
+import json from "@rollup/plugin-json";
+
 import { readFileSync, readdirSync } from "fs";
 const pkg = JSON.parse(
   readFileSync(new URL("./package.json", import.meta.url))
@@ -27,8 +30,7 @@ function createConf(entry) {
   console.log(entry, input);
 
   return {
-    // 入口文件
-    input,
+    input, // 入口文件
     output: [
       {
         format: "umd",
@@ -37,35 +39,34 @@ function createConf(entry) {
         // default: 默认导出, 一个
         exports: "named",
         name: "SutieUtils", // window.SutieUtils
-        // "dist/main/index.umd.js",
-        file: `./dist/${path || filename}/index.umd.js`.replace(/\/\//, "/"),
+        file: `./umd/${path || filename}.js`.replace(/\/\//, "/"),
       },
       {
         format: "es",
         exports: "named",
-        file: `./dist/${path || filename}/index.js`.replace(/\/\//, "/"),
+        file: `./es/${path || filename}.js`.replace(/\/\//, "/"),
       },
       {
         format: "cjs",
         exports: "named",
-        file: `./dist/${path || filename}/index.cjs`.replace(/\/\//, "/"),
+        file: `./cjs/${path || filename}.cjs`.replace(/\/\//, "/"),
         // 插件可以写在 output 针对某一种输出生效
-        plugins: [terser()],
+        // plugins: [terser()],
       },
     ],
 
     // 插件也可以对所有输出生效
-    // plugins: [terser()],
+    plugins: [terser(), json()],
   };
 }
 
-console.log(
-  JSON.stringify(
-    entry.map((name) => createConf(name)),
-    null,
-    2
-  )
-);
+// console.log(
+//   JSON.stringify(
+//     entry.map((name) => createConf(name)),
+//     null,
+//     2
+//   )
+// );
 
 export default entry.map((name) => createConf(name));
 

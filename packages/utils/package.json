@@ -3,10 +3,18 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./cjs/index.cjs",
+  "module": "./es/index.js",
+  "exports": "./umd/index.js",
+  "typings": "./es/index.d.ts",
   "scripts": {
     "build": "rollup -c"
   },
   "devDependencies": {
+    "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-terser": "^0.4.0",
     "rollup": "^3.18.0"
   }
