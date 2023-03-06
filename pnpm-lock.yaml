@@ -47,9 +47,11 @@ importers:
 
   packages/utils:
     specifiers:
+      '@rollup/plugin-json': ^6.0.0
       '@rollup/plugin-terser': ^0.4.0
       rollup: ^3.18.0
     devDependencies:
+      '@rollup/plugin-json': 6.0.0_rollup@3.18.0
       '@rollup/plugin-terser': 0.4.0_rollup@3.18.0
       rollup: 3.18.0
 
