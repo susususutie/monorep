@@ -1,11 +1,34 @@
-import terser from "@rollup/plugin-terser";
 // 压缩代码(去除空格, 变量名简写等)
+import terser from "@rollup/plugin-terser";
 
-/** @type {import('rollup').RollupOptions} */
-export default [
-  {
+import { readFileSync, readdirSync } from "fs";
+const pkg = JSON.parse(
+  readFileSync(new URL("./package.json", import.meta.url))
+);
+
+const entry = readdirSync(new URL("./src", import.meta.url));
+
+/**
+ *
+ * @param {string} entry
+ * @returns {import('rollup').RollupOptions}
+ */
+function createConf(entry) {
+  let filename, path;
+  if (/\.js/.test(entry)) {
+    filename = entry.replace(/\.js/, "");
+    path = "";
+  } else {
+    filename = "index";
+    path = entry;
+  }
+
+  const input = `./src/${path}/${filename}.js`.replace(/\/\//, "/");
+  console.log(entry, input);
+
+  return {
     // 入口文件
-    input: "./src/main.js",
+    input,
     output: [
       {
         format: "umd",
@@ -14,17 +37,18 @@ export default [
         // default: 默认导出, 一个
         exports: "named",
         name: "SutieUtils", // window.SutieUtils
-        file: "dist/main/index.umd.js",
+        // "dist/main/index.umd.js",
+        file: `./dist/${path || filename}/index.umd.js`.replace(/\/\//, "/"),
       },
       {
         format: "es",
         exports: "named",
-        file: "dist/main/index.js",
+        file: `./dist/${path || filename}/index.js`.replace(/\/\//, "/"),
       },
       {
         format: "cjs",
         exports: "named",
-        file: "dist/main/index.cjs.js",
+        file: `./dist/${path || filename}/index.cjs`.replace(/\/\//, "/"),
         // 插件可以写在 output 针对某一种输出生效
         plugins: [terser()],
       },
@@ -32,30 +56,18 @@ export default [
 
     // 插件也可以对所有输出生效
     // plugins: [terser()],
-  },
-  {
-    input: "./src/other.js",
-    output: [
-      {
-        format: "umd",
-        exports: "named",
-        name: "SutieUtils",
-        file: "dist/other/index.umd.js",
-      },
-      {
-        format: "es",
-        exports: "named",
-        file: "dist/other/index.umd.js",
-      },
-      {
-        format: "cjs",
-        exports: "named",
-        file: "dist/other/index.cjs.js",
-        plugins: [terser()],
-      },
-    ],
-  },
-];
+  };
+}
+
+console.log(
+  JSON.stringify(
+    entry.map((name) => createConf(name)),
+    null,
+    2
+  )
+);
+
+export default entry.map((name) => createConf(name));
 
 /**
  * output.exports
