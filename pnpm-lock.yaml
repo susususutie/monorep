@@ -53,6 +53,7 @@ importers:
       rollup: ^3.18.0
       rollup-plugin-commonjs: ^10.1.0
       rollup-plugin-dts: ^5.2.0
+      rollup-plugin-esbuild: ^5.0.0
       rollup-plugin-node-resolve: ^5.2.0
       rollup-plugin-typescript2: ^0.34.1
       tslib: ^2.5.0
@@ -64,6 +65,7 @@ importers:
       rollup: 3.18.0
       rollup-plugin-commonjs: 10.1.0_rollup@3.18.0
       rollup-plugin-dts: 5.2.0_fn2onl6nbsljlgjr3jlzr6w7we
+      rollup-plugin-esbuild: 5.0.0_rollup@3.18.0
       rollup-plugin-node-resolve: 5.2.0_rollup@3.18.0
       rollup-plugin-typescript2: 0.34.1_fn2onl6nbsljlgjr3jlzr6w7we
       tslib: 2.5.0
@@ -1205,6 +1207,10 @@ packages:
     dev: false
     optional: true
 
+  /es-module-lexer/1.2.0:
+    resolution: {integrity: sha512-2BMfqBDeVCcOlLaL1ZAfp+D868SczNpKArrTM3dhpd7dK/OVlogzY15qpUngt+LMTq5UC/csb9vVQAgupucSbA==}
+    dev: true
+
   /esbuild/0.16.17:
     resolution: {integrity: sha512-G8LEkV0XzDMNwXKgM0Jwu3nY3lSTwSGY6XbxM9cr9+s0T/qSV1q1JVPBGzm3dcjhCic9+emZDmMffkwgPeOeLg==}
     engines: {node: '>=12'}
@@ -1405,6 +1411,11 @@ packages:
     resolution: {integrity: sha512-8wb9Yw966OSxApiCt0K3yNJL8pnNeIv+OEq2YMidz4FKP6nonSRoOXc80iXY4JaN2FC11B9qsNmDsm+ZOfMROA==}
     dev: true
 
+  /joycon/3.1.1:
+    resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
+    engines: {node: '>=10'}
+    dev: true
+
   /js-tokens/4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
     optional: true
@@ -1419,6 +1430,10 @@ packages:
       string-convert: 0.2.1
     dev: false
     optional: true
+
+  /jsonc-parser/3.2.0:
+    resolution: {integrity: sha512-gfFQZrcTc8CnKXp6Y4/CBT3fTc0OVuDofpre4aEeEpSBPV5X5v4+Vmx+8snU7RLPrNHPKSgLxGo9YuQzz20o+w==}
+    dev: true
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==}
@@ -2267,6 +2282,23 @@ packages:
       typescript: 4.9.5
     optionalDependencies:
       '@babel/code-frame': 7.18.6
+    dev: true
+
+  /rollup-plugin-esbuild/5.0.0_rollup@3.18.0:
+    resolution: {integrity: sha512-1cRIOHAPh8WQgdQQyyvFdeOdxuiyk+zB5zJ5+YOwrZP4cJ0MT3Fs48pQxrZeyZHcn+klFherytILVfE4aYrneg==}
+    engines: {node: '>=14.18.0', npm: '>=8.0.0'}
+    peerDependencies:
+      esbuild: '>=0.10.1'
+      rollup: ^1.20.0 || ^2.0.0 || ^3.0.0
+    dependencies:
+      '@rollup/pluginutils': 5.0.2_rollup@3.18.0
+      debug: 4.3.4
+      es-module-lexer: 1.2.0
+      joycon: 3.1.1
+      jsonc-parser: 3.2.0
+      rollup: 3.18.0
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /rollup-plugin-node-resolve/5.2.0_rollup@3.18.0:
