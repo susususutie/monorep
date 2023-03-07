@@ -23,10 +23,8 @@
     }
   },
   "scripts": {
-    "build": "tsc && rollup -c rollup.config.js",
-    "dev": "vite",
-    "build:dep": "tsc && vite build",
-    "preview": "vite preview"
+    "build": "tsc && rollup -c",
+    "rollup": "rollup -c"
   },
   "devDependencies": {
     "@rollup/plugin-json": "^6.0.0",
@@ -47,5 +45,8 @@
     "antd": "^5.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+  },
+  "dependencies": {
+    "rollup-plugin-esbuild": "^5.0.0"
   }
 }

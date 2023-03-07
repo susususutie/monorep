@@ -18,8 +18,8 @@
     "declaration": true,
     "declarationDir": "./dist",
     "emitDeclarationOnly": true,
-    "rootDir": "./components"
+    "rootDir": "src",
+    "composite": true
   },
-  "include": ["components"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src", "rollup.config.js"]
 }
