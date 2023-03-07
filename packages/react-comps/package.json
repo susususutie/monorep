@@ -6,22 +6,9 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/index.cjs",
+  "main": "./dist/index.js",
   "module": "./dist/index.js",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    },
-    "./MyButton": {
-      "import": "./dist/MyButton.js",
-      "require": "./dist/MyButton.cjs"
-    },
-    "./MyTitle": {
-      "import": "./dist/MyTitle.js",
-      "require": "./dist/MyTitle.cjs"
-    }
-  },
+  "typings": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc && rollup -c",
     "rollup": "rollup -c"
