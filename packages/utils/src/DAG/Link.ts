@@ -43,7 +43,7 @@ export class Link<
   end?: Node<N>;
   router: number = 0;
 
-  constructor(options: { nodes: N[]; edges: E[] }) {
+  constructor(options?: { nodes: N[]; edges: E[] }) {
     if (options && options.nodes && options.edges) {
       this.parseFromX6(options.nodes, options.edges);
     }
