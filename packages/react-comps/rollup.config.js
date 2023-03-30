@@ -2,7 +2,7 @@ import json from "@rollup/plugin-json";
 import path from "path";
 import { fileURLToPath } from "url";
 // import typescript2 from "rollup-plugin-typescript2";
-// import commonjs from "rollup-plugin-commonjs";
+import commonjs from "rollup-plugin-commonjs";
 import esbuild from "rollup-plugin-esbuild";
 // import resolve from "rollup-plugin-node-resolve";
 import fs from "fs";
@@ -44,23 +44,39 @@ export default [
     const { filename, dirname, ext } = parseEntry(entry);
     return {
       input: `${entryDir}${dirname}${filename}.${ext}`,
-      output: {
-        format: "es",
-        exports: "named",
-        file: `${outputDir}${dirname}${filename}.js`,
-        globals: {
-          react: "React",
-          "react-dom": "ReactDom",
-          antd: "Antd",
+      output: [
+        // {
+        //   format: "umd",
+        //   exports: "named",
+        //   name: filename,
+        //   file: `${outputDir}${dirname}${filename}.umd.js`,
+        //   sourcemap: true,
+        //   globals: {
+        //     react: "React",
+        //     "react-dom": "ReactDom",
+        //     antd: "Antd",
+        //   },
+        // },
+        {
+          format: "es",
+          exports: "named",
+          file: `${outputDir}${dirname}${filename}.js`,
+          sourcemap: true,
         },
-      },
-      external: ["react", "react-dom", "antd"],
+        {
+          format: "cjs",
+          exports: "named",
+          file: `${outputDir}${dirname}${filename}.cjs`,
+          sourcemap: true,
+        },
+      ],
+      external: ["react", "react-dom", "antd", "react/jsx-runtime"],
       plugins: [
         // resolve(),
         json({
           compact: true,
         }),
-        // commonjs(),
+        commonjs(),
         esbuild(),
       ],
       watch: false,
