@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "preserve",
+    "outDir": "./esm/",
+    "declaration": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "incremental": false
+  },
+  "include": ["src/components"]
+}

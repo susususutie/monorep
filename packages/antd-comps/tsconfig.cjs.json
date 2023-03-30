@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "Node",
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "preserve",
+    "outDir": "./lib/",
+    "declaration": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "incremental": false,
+  },
+  "include": ["src/components"],
+  "exclude": ["node_modules"]
+}
