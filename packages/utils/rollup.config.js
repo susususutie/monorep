@@ -7,12 +7,19 @@ import dts from "rollup-plugin-dts";
 import commonjs from "@rollup/plugin-commonjs";
 import esbuild from "rollup-plugin-esbuild";
 import resolve from "@rollup/plugin-node-resolve";
-
 import { readdirSync, readFileSync } from "fs";
+
 const pkg = JSON.parse(
   readFileSync(new URL("./package.json", import.meta.url))
 );
-
+const PKG_NAME = pkg.name
+  .replace("@", "")
+  .split("/")
+  .map((word) => word.replace(/\w/, (m) => m.toUpperCase()))
+  .join("");
+const CJS_DIR = pkg.main.match(/\/(\w+)\//)[1];
+const ESM_DIR = pkg.module.match(/\/(\w+)\//)[1];
+const UMD_DIR = pkg.exports.match(/\/(\w+)\//)[1];
 const entries = readdirSync(new URL("./src", import.meta.url)).filter(
   (entry) => !entry.startsWith("__DEV__")
 );
@@ -30,12 +37,12 @@ function parseEntry(entry) {
   const input = `./src/${path}/${filename}.ts`.replace(/\/\//, "/");
   const output = path || filename;
 
-  const umdFile = `./umd/${output}.js`.replace(/\/\//, "/");
-  const esmFile = `./es/${output}.js`.replace(/\/\//, "/");
-  const cjsFile = `./cjs/${output}.cjs`.replace(/\/\//, "/");
-  const dtsFile = `./es/${path || filename}.d.ts`.replace(/\/\//, "/");
+  const umdFile = `./${UMD_DIR}/${output}.js`.replace(/\/\//, "/");
+  const esmFile = `./${ESM_DIR}/${output}.js`.replace(/\/\//, "/");
+  const cjsFile = `./${CJS_DIR}/${output}.cjs`.replace(/\/\//, "/");
+  const dtsFile = `./${ESM_DIR}/${path || filename}.d.ts`.replace(/\/\//, "/");
 
-  return { input, umdFile, esmFile, cjsFile, dtsFile };
+  return { filename, input, umdFile, esmFile, cjsFile, dtsFile };
 }
 
 /**
@@ -44,12 +51,9 @@ function parseEntry(entry) {
  * @returns {import('rollup').RollupOptions}
  */
 function createConf(entry) {
-  const { input, umdFile, esmFile, cjsFile } = parseEntry(entry);
-
-  // console.log(`${entry} ==> ${input}`);
-
+  const { input, filename, umdFile, esmFile, cjsFile } = parseEntry(entry);
   return {
-    input, // 入口文件
+    input,
     output: [
       {
         format: "umd",
@@ -57,7 +61,7 @@ function createConf(entry) {
         // named:   具名导出, 多个
         // default: 默认导出, 一个
         exports: "named",
-        name: "SutieUtils", // window.SutieUtils
+        name: filename === "index" ? PKG_NAME : `${PKG_NAME}.${filename}`, // window.SutieUtils
         file: umdFile,
       },
       {
@@ -75,12 +79,7 @@ function createConf(entry) {
     ],
 
     // 插件也可以对所有输出生效
-    plugins: [
-      resolve(),
-      json(),
-      commonjs(),
-      esbuild(), // 或者 typescript2(),
-    ],
+    plugins: [resolve(), json(), commonjs(), esbuild()],
   };
 }
 
@@ -98,14 +97,6 @@ function createConfDts(entry) {
     plugins: [json(), dts({ respectExternal: true })],
   };
 }
-
-// console.log(
-//   JSON.stringify(
-//     entry.map((name) => createConf(name)),
-//     null,
-//     2
-//   )
-// );
 
 export default [
   ...entries.map((name) => createConf(name)),

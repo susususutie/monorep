@@ -7,11 +7,11 @@
     "dist"
   ],
   "main": "./cjs/index.cjs",
-  "module": "./es/index.js",
+  "module": "./esm/index.js",
   "exports": "./umd/index.js",
-  "typings": "./es/index.d.ts",
+  "typings": "./esm/index.d.ts",
   "scripts": {
-    "build": "rollup -c"
+    "build": "rm -rf ./cjs ./esm ./umd && rollup -c"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.0.1",

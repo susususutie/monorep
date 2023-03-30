@@ -13,6 +13,9 @@ dist-ssr
 *.local
 packages/react-antd-comps/esm
 packages/react-antd-comps/lib
+packages/utils/cjs
+packages/utils/esm
+packages/utils/umd
 
 # Editor directories and files
 .idea
