@@ -12,6 +12,7 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "incremental": false,
+    "sourceMap": true
   },
   "include": ["src/components"],
   "exclude": ["node_modules"]
