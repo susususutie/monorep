@@ -1,3 +1,6 @@
+/**
+ * Queue 用js实现的队列
+ */
 export default class Queue<T = any> {
   #data: T[] = [];
 

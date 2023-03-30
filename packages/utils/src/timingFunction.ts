@@ -1,5 +1,7 @@
 export function linear(t: number) {
-    return t;
+  return t;
 }
 
-export type TimingFuntionNames = "linear";
+export const enum TimingFunctions {
+  "linear" = "linear",
+}

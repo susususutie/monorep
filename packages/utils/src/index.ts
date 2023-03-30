@@ -1,4 +1,4 @@
-export { default as math } from "./math";
+export * as math from "./math";
 export { default as middleware } from "./middleware";
 export * as miniStore from "./miniStore";
 export { default as Queue } from "./Queue";

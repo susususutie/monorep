@@ -97,16 +97,3 @@ export function randomStandardNormalDistribution2() {
 export function normalDistribution2(mean: number, variance: number) {
   return mean + randomStandardNormalDistribution2() * variance;
 }
-
-export default {
-  rangeClosed,
-  rangeOpen,
-  rangeClosedOpen,
-  rangeOpenClosed,
-  majorityNum,
-  middleNum,
-  randomStandardNormalDistribution,
-  normalDistribution,
-  randomStandardNormalDistribution2,
-  normalDistribution2,
-};

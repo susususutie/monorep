@@ -1,8 +1,8 @@
 import * as TF from "./timingFunction";
-import type { TimingFuntionNames } from "./timingFunction";
+import type { TimingFunctions } from "./timingFunction";
 
 const enum STATE {
-    NOTSTART = 0b00,
+    NOT_START = 0b00,
     STARED = 0b01,
     PAUSED = 0b10,
     END = 0b11,
@@ -12,18 +12,18 @@ type TransitionOpt = {
     from: number;
     to: number;
     duration: number;
-    timingFunction: TimingFuntionNames | ((t: number) => number);
+    timingFunction: TimingFunctions | ((t: number) => number);
     update?: (value: number) => void;
     complete?: Function;
 };
 
 export function transition(option: TransitionOpt) {
     const { from, to, duration, timingFunction, update, complete } = option;
-    const easeFunc = TF[timingFunction as TimingFuntionNames] || timingFunction;
+    const easeFunc = TF[timingFunction as TimingFunctions] || timingFunction;
 
     let timer: number;
     let lastTime: number;
-    let state = STATE.NOTSTART;
+    let state = STATE.NOT_START;
 
     let progressValue = 0;
     let progressPercent = 0;
