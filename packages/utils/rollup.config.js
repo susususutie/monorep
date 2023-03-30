@@ -4,17 +4,18 @@ import terser from "@rollup/plugin-terser";
 import json from "@rollup/plugin-json";
 // 生成 .d.ts 文件
 import dts from "rollup-plugin-dts";
-// import typescript2 from "rollup-plugin-typescript2";
-import commonjs from "rollup-plugin-commonjs";
+import commonjs from "@rollup/plugin-commonjs";
 import esbuild from "rollup-plugin-esbuild";
-import resolve from "rollup-plugin-node-resolve";
+import resolve from "@rollup/plugin-node-resolve";
 
 import { readdirSync, readFileSync } from "fs";
 const pkg = JSON.parse(
   readFileSync(new URL("./package.json", import.meta.url))
 );
 
-const entries = readdirSync(new URL("./src", import.meta.url));
+const entries = readdirSync(new URL("./src", import.meta.url)).filter(
+  (entry) => !entry.startsWith("__DEV__")
+);
 
 function parseEntry(entry) {
   let filename, path;
@@ -94,10 +95,7 @@ function createConfDts(entry) {
       file: dtsFile,
     },
 
-    plugins: [
-      json(),
-      dts({ respectExternal: true }),
-    ],
+    plugins: [json(), dts({ respectExternal: true })],
   };
 }
 
