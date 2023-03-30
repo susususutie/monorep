@@ -1,25 +1,22 @@
 {
-  "name": "antd-comps",
+  "name": "react-antd-comps",
   "version": "1.0.0",
-  "description": "",
+  "description": "UI components with React and antd",
   "main": "./esm/index.js",
   "module": "./esm/index.js",
   "typings": "./esm/index.d.ts",
+  "exports": "./lib/index.lib.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "build:esm": "tsc -p tsconfig.esm.json",
-    "build:cjs": "tsc -p tsconfig.cjs.json"
+    "build:esm": "rm -rf ./esm && tsc -p tsconfig.esm.json",
+    "build:cjs": "rm -rf ./lib && tsc -p tsconfig.cjs.json"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "antd": "^5.3.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
+  "dependencies": {},
   "peerDependencies": {
     "antd": "^5.3.2",
     "react": "^18.2.0",

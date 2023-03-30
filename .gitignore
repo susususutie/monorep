@@ -11,8 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
-packages/antd-comps/esm
-packages/antd-comps/lib
+packages/react-antd-comps/esm
+packages/react-antd-comps/lib
 
 # Editor directories and files
 .idea
