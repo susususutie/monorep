@@ -11,11 +11,11 @@ node_modules
 dist
 dist-ssr
 *.local
-packages/react-antd-comps/esm
-packages/react-antd-comps/lib
-packages/utils/cjs
-packages/utils/esm
-packages/utils/umd
+packages/*/esm
+packages/*/lib
+packages/*/cjs
+packages/*/esm
+packages/*/umd
 
 # Editor directories and files
 .idea

@@ -1,5 +1,5 @@
 {
-  "name": "react-antd-comps",
+  "name": "monorep/antd",
   "version": "1.0.0",
   "description": "UI components with React and antd",
   "main": "./esm/index.js",
