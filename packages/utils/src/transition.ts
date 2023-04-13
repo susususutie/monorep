@@ -13,7 +13,7 @@ type TransitionOpt = {
     to: number;
     duration: number;
     timingFunction: TimingFunctions | ((t: number) => number);
-    update?: (value: number) => void;
+    update?: (value: number) => boolean;
     complete?: Function;
 };
 
