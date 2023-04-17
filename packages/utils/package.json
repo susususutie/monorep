@@ -6,7 +6,7 @@
   "files": [
     "dist"
   ],
-  "main": "./cjs/index.cjs",
+  "main": "./cjs/index.js",
   "module": "./esm/index.js",
   "exports": "./umd/index.js",
   "typings": "./esm/index.d.ts",

@@ -6,7 +6,7 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "jsx": "preserve",
-    "outDir": "./lib/",
+    "outDir": "./cjs/",
     "declaration": true,
     "isolatedModules": true,
     "esModuleInterop": true,

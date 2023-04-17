@@ -6,12 +6,8 @@
     "build-all": "pnpm -r build",
     "build:react": "pnpm -r --filter react-* build"
   },
-  "devDependencies": {
-    "typescript": "^4.9.5",
-    "vite": "^4.1.4"
-  },
+  "devDependencies": {},
   "engines": {
-    "node": ">=16.17.0"
-  },
-  "packageManager": "pnpm@7.28.0"
+    "node": ">=18.0.0"
+  }
 }

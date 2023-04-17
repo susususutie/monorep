@@ -1,6 +1,6 @@
 import { ConfigProvider, Form, FormProps, Input, Row } from 'antd';
 import { useState } from 'react';
-import { ComponentPanel, MyButton, MyTitle } from './components';
+import { Arrow, AsyncSelect, ComponentPanel, MyButton, MyTitle } from './components';
 import MemoPrefix from './util/MemoPrefix';
 
 function App() {
@@ -27,6 +27,45 @@ function App() {
               <Input />
             </Form.Item>
           </Form>
+        </ComponentPanel>
+
+        <ComponentPanel title="Arrow" extra="箭头组件,可自定义颜色及是否开启动画">
+          <Space direction="vertical">
+            <Arrow direction="left" />
+            <Arrow direction="right" />
+            <Arrow color="default" />
+            <Arrow color="disabled" />
+            <Arrow color="error" />
+            <Arrow color="primary" />
+            <Arrow color="success" />
+            <Arrow color="warning" />
+            <Arrow animation />
+            <Arrow.Group size="default">
+              <Arrow />
+              <Arrow />
+            </Arrow.Group>
+            <Arrow.Group size="large">
+              <Arrow />
+              <Arrow />
+            </Arrow.Group>
+            <Arrow.Group size="small">
+              <Arrow />
+              <Arrow />
+            </Arrow.Group>
+          </Space>
+        </ComponentPanel>
+
+        <ComponentPanel title="AsyncSelect" extra="异步获取options的Select组件">
+          <AsyncSelect
+            style={{ width: 240 }}
+            request={async () => {
+              await new Promise(resolve => setTimeout(resolve, 1200));
+              return [
+                { value: 1, label: '选项一' },
+                { value: 2, label: '选项二' },
+              ];
+            }}
+          />
         </ComponentPanel>
 
         <ComponentPanel title="Demo" extra="自定义组件示例">

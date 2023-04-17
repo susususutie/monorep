@@ -39,7 +39,7 @@ function parseEntry(entry) {
 
   const umdFile = `./${UMD_DIR}/${output}.js`.replace(/\/\//, "/");
   const esmFile = `./${ESM_DIR}/${output}.js`.replace(/\/\//, "/");
-  const cjsFile = `./${CJS_DIR}/${output}.cjs`.replace(/\/\//, "/");
+  const cjsFile = `./${CJS_DIR}/${output}.js`.replace(/\/\//, "/");
   const dtsFile = `./${ESM_DIR}/${path || filename}.d.ts`.replace(/\/\//, "/");
 
   return { filename, input, umdFile, esmFile, cjsFile, dtsFile };

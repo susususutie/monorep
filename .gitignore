@@ -11,10 +11,11 @@ node_modules
 dist
 dist-ssr
 *.local
-packages/*/esm
-packages/*/lib
+# es module
+packages/*/esm 
+# commonjs
 packages/*/cjs
-packages/*/esm
+# for browser
 packages/*/umd
 
 # Editor directories and files
