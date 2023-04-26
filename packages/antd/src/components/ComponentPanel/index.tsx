@@ -9,7 +9,7 @@ export type ComponentPanelProps = {
 
 export default function ComponentPanel({ title, extra, children }: ComponentPanelProps) {
   return (
-    <Col span={24}>
+    <Col span={12}>
       <Card title={title} bordered hoverable extra={extra}>
         {children}
       </Card>

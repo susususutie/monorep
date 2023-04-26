@@ -1,14 +1,24 @@
-import { ConfigProvider, Form, FormProps, Input, Row } from 'antd';
-import { useState } from 'react';
-import { Arrow, AsyncSelect, ComponentPanel, MyButton, MyTitle } from './components';
-import MemoPrefix from './util/MemoPrefix';
+import { ConfigProvider, Form, FormProps, Input, Row, Space } from "antd";
+import { useState } from "react";
+import {
+  Arrow,
+  AsyncSelect,
+  ComponentPanel,
+  MyButton,
+  MyTitle,
+} from "./components";
+import MemoPrefix from "./util/MemoPrefix";
 
 function App() {
   // const { getPrefixCls } = useContext(ConfigProvider.ConfigContext);
   // const renderPrefixCls = getPrefixCls();
 
-  const [prefixCls, setPrefixCls] = useState<string>(() => MemoPrefix.getPrefix());
-  const onFinish: NonNullable<FormProps<{ prefixCls: string }>['onFinish']> = values => {
+  const [prefixCls, setPrefixCls] = useState<string>(() =>
+    MemoPrefix.getPrefix()
+  );
+  const onFinish: NonNullable<FormProps<{ prefixCls: string }>["onFinish"]> = (
+    values
+  ) => {
     MemoPrefix.setPrefix(values.prefixCls);
     setPrefixCls(values.prefixCls);
   };
@@ -16,21 +26,32 @@ function App() {
   return (
     <ConfigProvider prefixCls={prefixCls}>
       <Row gutter={[24, 24]}>
-        <ComponentPanel title="antd配置" extra="更改配置,观察自定义组件是否同步变更">
+        <ComponentPanel
+          title="antd配置"
+          extra="更改配置,观察自定义组件是否同步变更"
+        >
           <Form
             initialValues={{ prefixCls: MemoPrefix.getPrefix() }}
             onFinish={onFinish}
             labelCol={{ span: 6 }}
             wrapperCol={{ span: 12 }}
           >
-            <Form.Item required name="prefixCls" label="prefixCls" rules={[{ required: true }, { pattern: /^\w+$/ }]}>
+            <Form.Item
+              required
+              name="prefixCls"
+              label="prefixCls"
+              rules={[{ required: true }, { pattern: /^\w+$/ }]}
+            >
               <Input />
             </Form.Item>
           </Form>
         </ComponentPanel>
 
-        <ComponentPanel title="Arrow" extra="箭头组件,可自定义颜色及是否开启动画">
-          <Space direction="vertical">
+        <ComponentPanel
+          title="Arrow"
+          extra="箭头组件,可自定义颜色及是否开启动画"
+        >
+          <Space direction="horizontal" wrap>
             <Arrow direction="left" />
             <Arrow direction="right" />
             <Arrow color="default" />
@@ -52,6 +73,10 @@ function App() {
               <Arrow />
               <Arrow />
             </Arrow.Group>
+            <Arrow.Group size={10}>
+              <Arrow />
+              <Arrow />
+            </Arrow.Group>
           </Space>
         </ComponentPanel>
 
@@ -59,10 +84,10 @@ function App() {
           <AsyncSelect
             style={{ width: 240 }}
             request={async () => {
-              await new Promise(resolve => setTimeout(resolve, 1200));
+              await new Promise((resolve) => setTimeout(resolve, 1200));
               return [
-                { value: 1, label: '选项一' },
-                { value: 2, label: '选项二' },
+                { value: 1, label: "选项一" },
+                { value: 2, label: "选项二" },
               ];
             }}
           />
