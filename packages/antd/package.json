@@ -1,11 +1,9 @@
 {
-  "name": "monorep/antd",
+  "name": "@sutie/antd",
   "version": "1.0.0",
   "description": "UI components with React and antd",
-  "main": "./esm/index.js",
-  "module": "./esm/index.js",
-  "typings": "./esm/index.d.ts",
-  "exports": "./cjs/index.lib.js",
+  "type": "module",
+  "main": "./src/components",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

@@ -8,7 +8,7 @@
   ],
   "main": "./cjs/index.js",
   "module": "./esm/index.js",
-  "exports": "./umd/index.js",
+  "browser": "./umd/index.js",
   "typings": "./esm/index.d.ts",
   "scripts": {
     "build": "rm -rf ./cjs ./esm ./umd && rollup -c"

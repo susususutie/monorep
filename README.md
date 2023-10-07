@@ -1,4 +1,4 @@
-# vite + pnpm workspace 实现 monorep 示例
+# vite + pnpm workspace 实现 monorepo 示例
 
 模板 TODO LIST:
 

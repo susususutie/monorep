@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 export type MyTitleProps = { children?: ReactNode };
 
 export default function MyTitle(props: MyTitleProps) {
-  const { children = "MyTitle" } = props;
+  const { children } = props;
 
-  return <Typography.Title level={3}>{children}</Typography.Title>;
+  return <Typography.Title level={3}>{children ?? "MyTitle"}</Typography.Title>;
 }
