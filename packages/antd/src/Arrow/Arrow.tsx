@@ -1,7 +1,7 @@
 import { cx, css, keyframes } from "@emotion/css";
 import { CSSProperties } from "react";
 import { theme } from "antd";
-import { point } from "./svg";
+import point from "./point.svg";
 import Group from "./Group";
 
 export type ArrowDirection = "left" | "right";
@@ -80,11 +80,12 @@ function useStyle({
     background-color: ${COLOR_MAP[color]};
   `;
   const ani = css`
-    background-image: url(${point});
+    background-image: url('${point}');
     background-repeat: repeat-x;
     width: 100%;
     height: 4px;
     position: absolute;
+    left: 0;
     top: -1.5px;
     background-size: auto 4px;
     background-position: 0px center;
