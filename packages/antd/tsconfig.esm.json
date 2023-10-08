@@ -14,5 +14,5 @@
     "incremental": false,
     "sourceMap": true
   },
-  "include": ["src/components"]
+  "include": ["src/index"]
 }
