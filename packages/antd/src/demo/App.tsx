@@ -1,9 +1,8 @@
-import { Card, ConfigProvider, Divider, Form, FormProps, Input, Row, Space, Typography, theme } from "antd";
-import { Suspense, lazy, useState } from "react";
-import { Arrow, AsyncSelect, ComponentPanel, MyButton, MyTitle } from "..";
 import { css } from "@emotion/css";
+import { ConfigProvider, Divider, Form, FormProps, Input, theme } from "antd";
+import { Suspense, lazy, useState } from "react";
 
-const paths = ["Arrow", "AsyncSelect"];
+const paths = ["Arrow", "AsyncSelect", 'BarTitle'];
 const demoList = paths.map((path) => ({
   path,
   name: path,
