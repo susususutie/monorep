@@ -37,6 +37,7 @@ function createLines(options?: { start?: string; w?: number; h?: number }) {
         x2: parse(x),
         y2: parse(y),
         label: "label",
+        color: 'blue',
         data: { link_status: 0 },
       };
     });
@@ -52,7 +53,7 @@ export default function Demo() {
 
       <Card>
         <div style={{ position: "relative", width: 451, height: 351, border: "1px dashed #eee" }}>
-          <FlyLine lines={createLines()} />
+          <FlyLine lines={createLines({start: '[w/2,h/2]'})} />
         </div>
       </Card>
 

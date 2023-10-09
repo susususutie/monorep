@@ -2,6 +2,7 @@ import { memo, useEffect, useMemo, useRef } from "react";
 import SvgLine from "./SvgLine";
 import SvgMarker from "./SvgMarker";
 import useAutoResize from "./useAutoResize";
+import { FlyLineContextValue, FlyLineContext, defaultContextValue } from "./context";
 
 /** 资产连线两种状态 */
 const LINK_STATUS = {
@@ -46,6 +47,7 @@ type LineConfig = {
 };
 
 type FlyLineProps = {
+  config?: FlyLineContextValue;
   /** 高亮飞线uid */
   highlightLines?: string[];
   lines: LineConfig[];
@@ -54,7 +56,7 @@ type FlyLineProps = {
 };
 
 function InternalFlyLine(props: FlyLineProps) {
-  const { lines, highlightLines, onHover } = props;
+  const { config = defaultContextValue, lines, highlightLines, onHover } = props;
 
   /**
    * 传入的所有线条颜色, 去除默认的几种颜色, 去重后为所有额外需要的颜色, 根据颜色渲染marker
@@ -143,34 +145,36 @@ function InternalFlyLine(props: FlyLineProps) {
 
   return (
     <svg style={{ width: "100%", height: "100%", position: "absolute", top: 0, pointerEvents: "none" }}>
-      <defs>
-        {defaultMarkerColors.map((color) => (
-          <SvgMarker key={color} color={color} />
+      <FlyLineContext.Provider value={{ ...defaultContextValue, ...config }}>
+        <defs>
+          {defaultMarkerColors.map((color) => (
+            <SvgMarker key={color} color={color} />
+          ))}
+          {markerColors.length > 0 && markerColors.map((color) => <SvgMarker key={color} color={color} />)}
+        </defs>
+        {sortLines.map((line) => (
+          <SvgLine
+            key={line.uid}
+            uid={line.uid}
+            x1={line.x1}
+            y1={line.y1}
+            x2={line.x2}
+            y2={line.y2}
+            label={line.label}
+            darkColor={
+              line.data.link_status === LINK_STATUS.NORMAL.value
+                ? LINK_STATUS.NORMAL.colorDark
+                : LINK_STATUS.UN_NORMAL.colorDark
+            }
+            lightColor={
+              line.data.link_status === LINK_STATUS.NORMAL.value
+                ? LINK_STATUS.NORMAL.colorLight
+                : LINK_STATUS.UN_NORMAL.colorLight
+            }
+            isHighlight={highlightLines && highlightLines.includes(`${line.uid}`)}
+          />
         ))}
-        {markerColors.length > 0 && markerColors.map((color) => <SvgMarker key={color} color={color} />)}
-      </defs>
-      {sortLines.map((line) => (
-        <SvgLine
-          key={line.uid}
-          uid={line.uid}
-          x1={line.x1}
-          y1={line.y1}
-          x2={line.x2}
-          y2={line.y2}
-          label={line.label}
-          darkColor={
-            line.data.link_status === LINK_STATUS.NORMAL.value
-              ? LINK_STATUS.NORMAL.colorDark
-              : LINK_STATUS.UN_NORMAL.colorDark
-          }
-          lightColor={
-            line.data.link_status === LINK_STATUS.NORMAL.value
-              ? LINK_STATUS.NORMAL.colorLight
-              : LINK_STATUS.UN_NORMAL.colorLight
-          }
-          isHighlight={highlightLines && highlightLines.includes(`${line.uid}`)}
-        />
-      ))}
+      </FlyLineContext.Provider>
     </svg>
   );
 }

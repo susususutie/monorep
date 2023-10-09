@@ -1,7 +1,8 @@
-import { memo } from "react";
+import { memo, useContext } from "react";
 import SvgLabel from "./SvgLabel";
 import SvgMarker from "./SvgMarker";
 import { getPointDistance } from "./tool";
+import { FlyLineContext } from "./context";
 
 type SvgLineProps = {
   /** 飞线唯一id */
@@ -27,16 +28,17 @@ type SvgLineProps = {
 function InternalSvgLine(props: SvgLineProps) {
   const { uid, x1, y1, x2, y2, label: labelText, lightColor, darkColor, isHighlight } = props;
 
+  const { forceSweep, showAuxiliaryLine } = useContext(FlyLineContext);
+
   const {
+    path,
     alpha,
     circle,
     label: labelHoverPosition,
     label2: labelPosition,
     center,
     middle,
-  } = getPath([x1, y1], [x2, y2]);
-  const sweep = x2 - x1 >= 0 ? 1 : 0; // ? 是否逆时针
-  const path = `M ${x1} ${y1} A ${circle.r} ${circle.r} ${circle.crs} 0 ${sweep} ${x2} ${y2}`;
+  } = getPath([x1, y1], [x2, y2], forceSweep ?? x2 - x1 >= 0 ? 1 : 0);
   const pathId = `path:${path}`.replace(/\s+/g, "-");
   // const dasharray = isDash ? 3 : undefined;
 
@@ -76,30 +78,32 @@ function InternalSvgLine(props: SvgLineProps) {
       </g>
 
       {/* 开发时的辅助线 */}
-      {/* <g>
-        <line aria-description="起始点连接线" x1={x1} y1={y1} x2={x2} y2={y2} strokeDasharray={3} stroke="#d6cccc" />
-        <line
-          aria-description="起始点连接线的中垂线"
-          x1={center[0]}
-          y1={center[1]}
-          x2={middle[0]}
-          y2={middle[1]}
-          strokeDasharray={3}
-          stroke="#d6cccc"
-        />
-        <circle aria-description="起始点连接线中点" cx={middle[0]} cy={middle[1]} r="2" fill="grey" />
-        <circle aria-description="圆弧线中点" name="center" cx={center[0]} cy={center[1]} r="2" fill="lime" />
-        <circle
-          aria-description="圆弧所在的圆"
-          cx={circle.x}
-          cy={circle.y}
-          r={circle.r}
-          stroke="#d6cccc"
-          fill="transparent"
-          strokeDasharray={3}
-        />
-        <circle aria-description="圆心" cx={circle.x} cy={circle.y} r={2} fill="red" />
-      </g> */}
+      {showAuxiliaryLine && (
+        <g>
+          <line aria-description="起始点连接线" x1={x1} y1={y1} x2={x2} y2={y2} strokeDasharray={3} stroke="#d6cccc" />
+          <line
+            aria-description="起始点连接线的中垂线"
+            x1={center[0]}
+            y1={center[1]}
+            x2={middle[0]}
+            y2={middle[1]}
+            strokeDasharray={3}
+            stroke="#d6cccc"
+          />
+          <circle aria-description="起始点连接线中点" cx={middle[0]} cy={middle[1]} r="2" fill="grey" />
+          <circle aria-description="圆弧线中点" name="center" cx={center[0]} cy={center[1]} r="2" fill="lime" />
+          <circle
+            aria-description="圆弧所在的圆"
+            cx={circle.x}
+            cy={circle.y}
+            r={circle.r}
+            stroke="#d6cccc"
+            fill="transparent"
+            strokeDasharray={3}
+          />
+          <circle aria-description="圆心" cx={circle.x} cy={circle.y} r={2} fill="red" />
+        </g>
+      )}
 
       {/*
           feature(将来优化): color可能有透明度, 传递给label前需要移除透明度, 暂不考虑rgb等其他颜色标识
@@ -123,7 +127,13 @@ function InternalSvgLine(props: SvgLineProps) {
   );
 }
 
-function getPath(start: [number, number], end: [number, number]) {
+/** 根据起始坐标计算弧线的路径 */
+function getPath(
+  start: [number, number],
+  end: [number, number],
+  /** 0: 逆时针; 1:顺时针 */
+  sweep: 0 | 1
+) {
   // 经过中心点与斜线垂直间距
   const D = 24;
   const [startX, startY] = start;
@@ -149,7 +159,9 @@ function getPath(start: [number, number], end: [number, number]) {
   const x = middleX + (r - D) * Math.sin(alpha);
   const y = middleY + (r - D) * Math.cos(alpha);
   const crs = ((Math.acos((r - D) / r) * 2) / Math.PI) * 180;
+
   return {
+    path: `M ${start[0]} ${start[1]} A ${r} ${r} ${crs} 0 ${sweep} ${end[0]} ${end[1]}`,
     alpha,
     middle: [middleX, middleY],
     center: [centerX, centerY],
