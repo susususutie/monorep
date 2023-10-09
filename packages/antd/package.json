@@ -6,7 +6,6 @@
   "main": "./src/components",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
     "preview": "vite preview",
     "build:esm": "rm -rf ./esm && tsc -p tsconfig.esm.json",
     "build:cjs": "rm -rf ./cjs && tsc -p tsconfig.cjs.json"

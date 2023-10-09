@@ -14,6 +14,6 @@
     "incremental": false,
     "sourceMap": true
   },
-  "include": ["src/components"],
+  "include": ["src/FlyLine"],
   "exclude": ["node_modules"]
 }
