@@ -27,7 +27,7 @@ const defaultMarkerColors = [
   LINK_STATUS.UN_NORMAL.colorLight,
 ].map((color) => color.toLowerCase());
 
-type FlyLineProps<LineData> = {
+export type FlyLineProps<LineData = any> = {
   config?: FlyLineContextValue;
   /** 高亮飞线uid */
   highlightLines?: string[];

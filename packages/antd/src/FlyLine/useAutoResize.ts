@@ -70,7 +70,7 @@ export default function useAutoResize(
 }
 
 /** 根据起止dom计算飞线的最佳起止坐标 */
-function getLineAnchor(
+export function getLineAnchor(
   /** 起始dom */
   source: { x: number; y: number; width: number; height: number },
   /** 终止dom */
