@@ -1,4 +1,5 @@
 import { fittingString } from "./tool";
+import { LabelConfig } from "./context";
 
 /**   |<-   label宽度  ->|
  *
@@ -6,12 +7,6 @@ import { fittingString } from "./tool";
  * ---|   文字最大宽度   |-->
  *    --------------------
  */
-const DEG_PER_PI = 180; // Π: 180°
-const PADDING_HOVERABLE = 12;
-const MAX_WIDTH = 140;
-const MAX_TEXT_WIDTH = MAX_WIDTH - 2 * PADDING_HOVERABLE;
-const LABEL_HEIGHT = 20;
-const FONT_SIZE = 14;
 
 type SvgLabelProps = {
   /** 飞线唯一id */
@@ -23,52 +18,56 @@ type SvgLabelProps = {
   /** label 中心点定位 */
   y: number;
   /** 连线是否高亮 */
-  isHighlight?: boolean;
-  /** 浅色 */
-  lightColor: string;
-  /** 深色 */
-  darkColor: string;
-  /** label文字内容 */
-  text: string;
-};
+  isActive?: boolean;
+  active: LabelConfig & { text: string };
+} & LabelConfig & { text: string };
 
 export default function SvgLabel(props: SvgLabelProps) {
-  const { linkUid, alpha, x, y, text, darkColor, lightColor, isHighlight } = props;
+  const { linkUid, alpha, x: oX, y: oY, isActive, active, ...config } = props;
+  const cfg = {
+    maxWidth: 140,
+    padding: 12,
+    fontSize: 14,
+    height: 20,
+    ...(isActive ? { offset: 0, ...config, ...active } : { offset: 6, ...config }),
+  };
 
-  const labelTextConfig = fittingString(text, MAX_TEXT_WIDTH, FONT_SIZE);
+  const maxTextWidth = cfg.bgColor ? cfg.maxWidth - 2 * cfg.padding : cfg.maxWidth;
+  const labelTextConfig = fittingString(cfg.text, maxTextWidth, cfg.fontSize);
   // 有省略号按最大宽度, 没有则按实际宽度显示
-  const labelTextWidth = labelTextConfig.ellipsis ? MAX_TEXT_WIDTH : labelTextConfig.width;
-  const labelWidth = labelTextConfig.ellipsis ? MAX_WIDTH : labelTextConfig.width + 2 * PADDING_HOVERABLE;
-  const width = isHighlight ? labelWidth : labelTextWidth;
-  const height = isHighlight ? LABEL_HEIGHT : 16; // 文字高度难以测量, 16为估计的大概值
+  const labelTextWidth = labelTextConfig.ellipsis ? maxTextWidth : labelTextConfig.width;
+  const labelWidth = cfg.bgColor ? labelTextWidth + 2 * cfg.padding : labelTextWidth;
+  const labelHeight = cfg.height;
+
+  const [x, y] = cfg.offset ? [oX - cfg.offset * Math.sin(alpha), oY - cfg.offset * Math.cos(alpha)] : [oX, oY];
 
   return (
     <g
-      transform={`rotate(${-(alpha / Math.PI) * DEG_PER_PI} ${x} ${y} )`}
+      transform={`rotate(${-(alpha / Math.PI) * 180} ${x} ${y} )`}
       style={{ pointerEvents: "fill", cursor: "pointer" }}
     >
       {/* transformOrigin="center" style={{transformOrigin: 'center'}} */}
-      <g transform={`translate(${x - width / 2},${y - height / 2})`}>
-        {isHighlight && (
+      <g transform={`translate(${x - labelWidth / 2},${y - labelHeight / 2})`}>
+        {cfg.bgColor && (
           <rect
-            fill={darkColor}
-            rx={height / 2}
-            ry={height / 2}
-            stroke={darkColor}
+            fill={cfg.bgColor}
+            rx={labelHeight / 2}
+            ry={labelHeight / 2}
+            stroke={cfg.bgColor}
             strokeWidth="1"
-            width={width}
-            height={height}
+            width={labelWidth}
+            height={labelHeight}
           ></rect>
         )}
         <text
           xmlSpace="preserve"
-          dx={width / 2}
-          dy={height / 2 + 1} // +1 微调位置
-          fill={isHighlight ? "#fff" : lightColor}
+          dx={labelWidth / 2}
+          dy={labelHeight / 2}
+          fill={cfg.color}
           textAnchor="middle"
           alignmentBaseline="middle"
-          fontSize={FONT_SIZE}
-          style={{ userSelect: "none" }}
+          fontSize={cfg.fontSize}
+          style={{ userSelect: "none", lineHeight: cfg.height + "px" }}
         >
           {labelTextConfig.text}
         </text>
@@ -76,12 +75,12 @@ export default function SvgLabel(props: SvgLabelProps) {
           data-link-role="label"
           data-link-uid={linkUid}
           fill={"transparent"}
-          rx={height / 2}
-          ry={height / 2}
+          rx={labelHeight / 2}
+          ry={labelHeight / 2}
           stroke={"transparent"}
           strokeWidth="1"
-          width={width}
-          height={height}
+          width={labelWidth}
+          height={labelHeight}
         ></rect>
       </g>
     </g>

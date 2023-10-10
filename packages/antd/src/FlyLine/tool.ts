@@ -47,16 +47,6 @@ export function observerDomResize(dom: HTMLElement, callback: () => void) {
 }
 
 /**
- * 计算两点直线间距
- */
-export function getPointDistance(pointOne: [number, number], pointTwo: [number, number]) {
-  const minusX = Math.abs(pointOne[0] - pointTwo[0]);
-  const minusY = Math.abs(pointOne[1] - pointTwo[1]);
-
-  return Math.sqrt(minusX * minusX + minusY * minusY);
-}
-
-/**
  * 计算单个字符宽度
  * @param letter 单个字符(英文)
  * @param fontSize 字体大小

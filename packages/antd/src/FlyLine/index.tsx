@@ -1,5 +1,5 @@
 import { memo, useEffect, useMemo, useRef } from "react";
-import SvgLine from "./SvgLine";
+import SvgLine, { SvgLineProps } from "./SvgLine";
 import SvgMarker from "./SvgMarker";
 import useAutoResize from "./useAutoResize";
 import { FlyLineContextValue, FlyLineContext, defaultContextValue } from "./context";
@@ -27,35 +27,16 @@ const defaultMarkerColors = [
   LINK_STATUS.UN_NORMAL.colorLight,
 ].map((color) => color.toLowerCase());
 
-type LineConfig = {
-  /** 飞线唯一id */
-  uid: string;
-  /** 飞线起点x */
-  x1: number;
-  /** 飞线起点y */
-  y1: number;
-  /** 飞线终点x */
-  x2: number;
-  /** 飞线终点y */
-  y2: number;
-  /** label内容 */
-  label?: string;
-  /** 线条与label的颜色 */
-  color?: string;
-  /** 其他数据 */
-  data?: any;
-};
-
-type FlyLineProps = {
+type FlyLineProps<LineData> = {
   config?: FlyLineContextValue;
   /** 高亮飞线uid */
   highlightLines?: string[];
-  lines: LineConfig[];
+  lines: (SvgLineProps & { data?: LineData })[];
   /** 只能同时hover一个元素, 当未hover到link时, 参数为空 */
   onHover?: (type: "link" | "label" | "other", lineId?: string) => void;
 };
 
-function InternalFlyLine(props: FlyLineProps) {
+function InternalFlyLine<LineData = any>(props: FlyLineProps<LineData>) {
   const { config = defaultContextValue, lines, highlightLines, onHover } = props;
 
   /**
@@ -65,8 +46,8 @@ function InternalFlyLine(props: FlyLineProps) {
     () =>
       lines
         // 筛选出新增的自定义颜色
-        .filter((line) => line.color && !defaultMarkerColors.includes(line.color.toLowerCase()))
-        .map((line) => line.color)
+        .flatMap((line) => [line.color, line.active?.color])
+        .filter((color) => color && !defaultMarkerColors.includes(color.toLowerCase()))
         // 去重
         .filter((color, index, list) => color && list.findIndex((c) => c === color) === index) as string[],
     [lines]
@@ -144,7 +125,15 @@ function InternalFlyLine(props: FlyLineProps) {
   }, []);
 
   return (
-    <svg style={{ width: "100%", height: "100%", position: "absolute", top: 0, pointerEvents: "none" }}>
+    <svg
+      style={{
+        width: config.width ?? "100%",
+        height: config.width ?? "100%",
+        position: "absolute",
+        top: 0,
+        pointerEvents: "none",
+      }}
+    >
       <FlyLineContext.Provider value={{ ...defaultContextValue, ...config }}>
         <defs>
           {defaultMarkerColors.map((color) => (
@@ -153,26 +142,7 @@ function InternalFlyLine(props: FlyLineProps) {
           {markerColors.length > 0 && markerColors.map((color) => <SvgMarker key={color} color={color} />)}
         </defs>
         {sortLines.map((line) => (
-          <SvgLine
-            key={line.uid}
-            uid={line.uid}
-            x1={line.x1}
-            y1={line.y1}
-            x2={line.x2}
-            y2={line.y2}
-            label={line.label}
-            darkColor={
-              line.data.link_status === LINK_STATUS.NORMAL.value
-                ? LINK_STATUS.NORMAL.colorDark
-                : LINK_STATUS.UN_NORMAL.colorDark
-            }
-            lightColor={
-              line.data.link_status === LINK_STATUS.NORMAL.value
-                ? LINK_STATUS.NORMAL.colorLight
-                : LINK_STATUS.UN_NORMAL.colorLight
-            }
-            isHighlight={highlightLines && highlightLines.includes(`${line.uid}`)}
-          />
+          <SvgLine key={line.uid} {...line} isActive={highlightLines && highlightLines.includes(`${line.uid}`)} />
         ))}
       </FlyLineContext.Provider>
     </svg>
