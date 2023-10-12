@@ -81,22 +81,32 @@ function Item({ row, col }: { row: number; col: number }) {
 
   return (
     <div>
-      <Button.Group>
-        <Button onClick={() => setCount(Math.max(count - 1, 0))}>-</Button>
-        <Button>
-          类型{row + 1},中心{col + 1};节点:{count}
-        </Button>
-        <Button onClick={() => setCount(Math.min(count + 1, 99))}>+</Button>
-      </Button.Group>
+      <div
+        className={css`
+          padding: 8px;
+          display: flex;
+          justify-content: center;
+        `}
+      >
+        <Button.Group>
+          <Button onClick={() => setCount(Math.max(count - 1, 0))}>-</Button>
+          <Button>
+            类型{row + 1},中心{col + 1};节点:{count}
+          </Button>
+          <Button onClick={() => setCount(Math.min(count + 1, 99))}>+</Button>
+        </Button.Group>
+      </div>
+
       <div
         className={css`
           width: 100%;
+          padding: 8px;
           display: flex;
           flex-direction: row;
           flex-wrap: wrap;
-          justify-content: center;
+          justify-content: space-evenly;
           align-items: center;
-          gap: 24px;
+          gap: 12px;
         `}
       >
         {Array(count)
