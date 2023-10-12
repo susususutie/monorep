@@ -1,9 +1,7 @@
 import { Card, Divider, Form, Slider, Space, Typography } from "antd";
-import FlyLine, { FlyLineProps } from "./index";
+import FlyLine, { FlyLineProps, useResize, getLineAnchor } from "./index";
 import { useEffect, useRef, useState } from "react";
 import { css } from "@emotion/css";
-import useResize from "./useResize";
-import { getLineAnchor } from "./useAutoResize";
 
 function createLines(options?: { start?: string; w?: number; h?: number }) {
   const { start, w = 800, h = 800 } = options ?? {};
@@ -64,7 +62,7 @@ function createLines(options?: { start?: string; w?: number; h?: number }) {
 
 const lines = createLines({ start: "[w/2,h/2]", w: 800, h: 800 });
 export default function Demo() {
-  const [size, setSize] = useState({ width: 800, height: 800 });
+  const [size, setSize] = useState(80);
   const wrapper = useRef<HTMLDivElement>(null);
   const [dynamicLines, setLines] = useState<FlyLineProps["lines"]>();
   const { isReSizing: isWrapperReSizing } = useResize(wrapper);
@@ -143,17 +141,13 @@ export default function Demo() {
 
       <Card title="自适应">
         <Form.Item label="width">
-          <Slider value={size.width} min={0} max={1000} onChange={(width) => setSize((s) => ({ ...s, width }))} />
-        </Form.Item>
-        <Form.Item label="height">
-          <Slider value={size.height} min={0} max={1000} onChange={(height) => setSize((s) => ({ ...s, height }))} />
+          <Slider value={size} min={0} max={100} onChange={(s) => setSize(s)} />
         </Form.Item>
 
         <div
           style={{
             position: "relative",
-            width: size.width,
-            height: size.height,
+            width: size + "%",
             border: "1px dashed #eee",
             boxSizing: "content-box",
           }}

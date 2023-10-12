@@ -7,12 +7,12 @@
     "allowSyntheticDefaultImports": true,
     "jsx": "preserve",
     "outDir": "./esm/",
-    "declaration": false,
+    "declaration": true,
     "isolatedModules": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "incremental": false,
-    "sourceMap": false
+    "sourceMap": true
   },
-  "include": ["src/FlyLine"]
+  "include": ["src/index.ts"]
 }

@@ -107,3 +107,75 @@ export function fittingString(str: string, maxWidth: number, fontSize: number) {
   }
   return { text: resultStr + ellipsis, width: strWidth + ellipsisWidth, ellipsis: true };
 }
+
+/** 根据起止dom计算飞线的最佳起止坐标 */
+export function getLineAnchor(
+  /** 起始dom */
+  source: { x: number; y: number; width: number; height: number },
+  /** 终止dom */
+  target: { x: number; y: number; width: number; height: number },
+  /** 相对位置参考dom */
+  reactive: { x: number; y: number }
+) {
+  const { x, y } = reactive;
+  let x1, x2, y1, y2;
+  /**
+   * 1. 水平方向(误差10px以内)
+   *
+   * [source] → [target]
+   * [target] ← [source]
+   */
+  if (Math.abs(source.y - target.y) <= 10) {
+    y1 = source.y - y + source.height / 2;
+    y2 = target.y - y + target.height / 2;
+    if (source.x < target.x) {
+      x1 = source.x - x + source.width;
+      x2 = target.x - x;
+    } else {
+      x1 = source.x - x;
+      x2 = target.x - x + target.width;
+    }
+  } else if (Math.abs(source.x - target.x) <= 10) {
+    /**
+     * 2. 垂直方向
+     *
+     * [source]     |     [target]
+     *    ↓        |        ↑
+     * [target]     |     [source]
+     */
+    x1 = source.x - x + source.width / 2;
+    x2 = target.x - x + target.width / 2;
+    if (source.y < target.y) {
+      y1 = source.y - y + source.height;
+      y2 = target.y - y;
+    } else {
+      y1 = source.y - y;
+      y2 = target.y - y + target.height;
+    }
+  } else {
+    /**
+     * 3.
+     *
+     *     ↱ [target]     |     [target] ↰
+     * [source]            |             [source]
+     *                     |
+     * [source]            |             [source]
+     *     ↳ [target]     |     [target] ↲
+     */
+    if (target.y > source.y) {
+      y1 = source.y - y + source.height;
+      y2 = target.y - y + target.height / 2;
+    } else {
+      y1 = source.y - y;
+      y2 = target.y - y + target.height / 2;
+    }
+
+    x1 = source.x - x + source.width / 2;
+    if (source.x > target.x) {
+      x2 = target.x - x + target.width;
+    } else {
+      x2 = target.x - x;
+    }
+  }
+  return { x1, y1, x2, y2 };
+}
