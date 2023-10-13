@@ -22,8 +22,8 @@ export type MatrixTableProps<RecordType extends Record<string, any> = any> = {
   }[];
 };
 
-export default function MatrixTable(props: MatrixTableProps) {
-  const { borderRadius = 2, gap = [18, 0], dataSource = [], columns = [], empty = <DefaultEmpty /> } = props;
+export default function MatrixTable<RecordType extends Record<string, any> = any>(props: MatrixTableProps<RecordType>) {
+  const { borderRadius = 2, gap = [18, 0], dataSource = [], columns = [], empty } = props;
 
   //   th     th     th
   //   td     td     td
@@ -41,6 +41,8 @@ export default function MatrixTable(props: MatrixTableProps) {
     `,
     [gap[1]]
   );
+
+  const Empty = typeof empty === "function" ? empty() : empty ?? <DefaultEmpty />;
 
   return (
     <div>
@@ -103,9 +105,9 @@ export default function MatrixTable(props: MatrixTableProps) {
                       }}
                     >
                       {["string", "number"].includes(typeof item) ? (
-                        <CenterTitle>{item}</CenterTitle>
+                        <CenterTitle title={item as string} />
                       ) : isEmpty ? (
-                        empty
+                        <>{Empty}</>
                       ) : (
                         item
                       )}
@@ -143,8 +145,8 @@ const centerTitle = css`
   align-items: center;
   justify-content: center;
 `;
-function CenterTitle({ children }: { children: string }) {
-  return <div className={centerTitle}>{children}</div>;
+function CenterTitle({ title }: { title: string }) {
+  return <div className={centerTitle}>{title}</div>;
 }
 const emptyCls = css`
   display: flex;

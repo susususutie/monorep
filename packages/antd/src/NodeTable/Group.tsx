@@ -1,7 +1,7 @@
 import { css } from "@emotion/css";
 import { Button } from "antd";
-import { useContext, useState } from "react";
-import NodeTableContext from "./context";
+import { memo, useContext, useState } from "react";
+import { GetNodeDataContext } from "./context";
 
 function sliceArray(arr: any[], size = 3) {
   const result = [];
@@ -11,8 +11,16 @@ function sliceArray(arr: any[], size = 3) {
   return result;
 }
 
-export default function Group({ items, row, col }: { items: number[]; row: number; col: number }) {
-  const {getNodeData} = useContext(NodeTableContext)
+export default function Group({
+  align,
+  items,
+  padding,
+}: {
+  align: "left" | "center";
+  items?: number[][];
+  padding?: number[];
+}) {
+  if (!items?.length) return;
 
   return (
     <div
@@ -39,56 +47,38 @@ export default function Group({ items, row, col }: { items: number[]; row: numbe
       <div
         className={css`
           width: 100%;
-          height: calc(100% - 48px);
+          height: 100%;
           padding-bottom: 12px;
         `}
       >
-        {sliceArray(items).map((list, listIndex) => (
+        {items.map((list, listIndex) => (
           <div
             key={listIndex}
-            className={css`
-              padding: 24px 24px 0;
-              display: flex;
-              flex-direction: row;
-              flex-wrap: nowrap;
-              justify-content: space-between;
-              align-items: flex-start;
-              ${list.length < 3 ? `::after{width:64px;display:block;content:"";}` : ""}
-            `}
-            style={{ paddingTop: 24 }}
+            className={
+              list.length === 3
+                ? css`
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: nowrap;
+                    justify-content: space-around;
+                    align-items: flex-start;
+                  `
+                : css`
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: nowrap;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+                    ::after {
+                      content: "";
+                      flex-grow: 1;
+                    }
+                  `
+            }
+            style={{ paddingTop: 24 + (padding?.[listIndex] || 0) }}
           >
             {list.map((node, index) => (
-              <span key={index}>
-                <span
-                  className={css`
-                    display: block;
-                    margin: 0 8px;
-                    width: 48px;
-                    height: 48px;
-                    background: #ffffff;
-                    border: 1px solid #e6e9f0;
-                    border-radius: 2px;
-                    box-shadow: 0px 2px 4px 0px rgba(56, 65, 92, 0.08);
-                  `}
-                />
-                <span
-                  className={css`
-                    display: block;
-                    margin-top: 8px;
-                    width: 64px;
-                    height: 40px;
-                    font-size: 12px;
-                    font-family: PingFang SC, PingFang SC-Regular;
-                    font-weight: 400;
-                    text-align: center;
-                    color: #38415c;
-                    line-height: 20px;
-                    overflow: hidden;
-                  `}
-                >
-                  {getNodeData(node).name}
-                </span>
-              </span>
+              <Item key={node} uid={node} />
             ))}
           </div>
         ))}
@@ -96,3 +86,45 @@ export default function Group({ items, row, col }: { items: number[]; row: numbe
     </div>
   );
 }
+
+function InternalItem({ uid }: { uid: number }) {
+  const getNodeData = useContext(GetNodeDataContext);
+  if (uid === 1) {
+    console.log("update node", getNodeData(uid));
+  }
+
+  return (
+    <span>
+      <span
+        className={css`
+          display: block;
+          margin: 0 8px;
+          width: 48px;
+          height: 48px;
+          background: #ffffff;
+          border: 1px solid #e6e9f0;
+          border-radius: 2px;
+          box-shadow: 0px 2px 4px 0px rgba(56, 65, 92, 0.08);
+        `}
+      />
+      <span
+        className={css`
+          display: block;
+          margin-top: 8px;
+          width: 64px;
+          height: 40px;
+          font-size: 12px;
+          font-family: PingFang SC, PingFang SC-Regular;
+          font-weight: 400;
+          text-align: center;
+          color: #38415c;
+          line-height: 20px;
+          overflow: hidden;
+        `}
+      >
+        {getNodeData(uid).name}
+      </span>
+    </span>
+  );
+}
+const Item = memo(InternalItem);
