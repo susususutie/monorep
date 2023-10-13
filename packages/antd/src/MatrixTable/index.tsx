@@ -158,7 +158,7 @@ const emptyCls = css`
 function DefaultEmpty() {
   return (
     <div className={emptyCls}>
-      <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="暂无数据" style={{ margin: 0 }} />
+      <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="暂无数据" />
     </div>
   );
 }
