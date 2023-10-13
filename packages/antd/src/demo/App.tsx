@@ -2,7 +2,7 @@ import { css } from "@emotion/css";
 import { ConfigProvider, Divider, Form, FormProps, Input, theme } from "antd";
 import { Suspense, lazy, useState } from "react";
 
-const paths = ["Arrow", "AsyncSelect", 'BarTitle', 'FlyLine', 'NodeTable'];
+const paths = ["Arrow", "AsyncSelect", 'BarTitle', 'MatrixTable', 'FlyLine', 'NodeTable'];
 const demoList = paths.map((path) => ({
   path,
   name: path,
