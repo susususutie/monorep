@@ -80,7 +80,11 @@ function Item({ row, col }: { row: number; col: number }) {
   const [count, setCount] = useState(row + col);
 
   return (
-    <div>
+    <div
+      className={css`
+        height: 100%;
+      `}
+    >
       <div
         className={css`
           padding: 8px;
@@ -100,32 +104,66 @@ function Item({ row, col }: { row: number; col: number }) {
       <div
         className={css`
           width: 100%;
-          padding: 8px;
-          display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
-          justify-content: space-evenly;
-          align-items: center;
-          gap: 12px;
+          height: calc(100% - 48px);
+          padding-bottom: 12px;
         `}
       >
-        {Array(count)
-          .fill(null)
-          .map((_, index) => (
-            <span
-              key={index}
-              className={css`
-                display: block;
-                width: 30px;
-                height: 30px;
-                background: #ffffff;
-                border: 1px solid #e6e9f0;
-                border-radius: 2px;
-                box-shadow: 0px 2px 8px 0px rgba(56, 65, 92, 0.08);
-              `}
-            ></span>
-          ))}
+        {sliceArray(Array(count).fill(null)).map((list, listIndex) => (
+          <div
+            key={listIndex}
+            className={css`
+              padding: 24px 24px 0;
+              display: flex;
+              flex-direction: row;
+              flex-wrap: nowrap;
+              justify-content: space-between;
+              align-items: flex-start;
+              ${list.length < 3 ? `::after{width:64px;display:block;content:"";}` : ""}
+            `}
+          >
+            {list.map((_, index) => (
+              <span key={index}>
+                <span
+                  className={css`
+                    display: block;
+                    margin: 0 8px;
+                    width: 48px;
+                    height: 48px;
+                    background: #ffffff;
+                    border: 1px solid #e6e9f0;
+                    border-radius: 2px;
+                    box-shadow: 0px 2px 4px 0px rgba(56, 65, 92, 0.08);
+                  `}
+                />
+                <span
+                  className={css`
+                    display: block;
+                    margin-top: 8px;
+                    width: 64px;
+                    height: 40px;
+                    font-size: 12px;
+                    font-family: PingFang SC, PingFang SC-Regular;
+                    font-weight: 400;
+                    text-align: center;
+                    color: #38415c;
+                    line-height: 20px;
+                  `}
+                >
+                  {"数据库".repeat(Math.floor(Math.random() * 3))}
+                </span>
+              </span>
+            ))}
+          </div>
+        ))}
       </div>
     </div>
   );
+}
+
+function sliceArray(arr: any[], size = 3) {
+  const result = [];
+  for (let i = 0; i < arr.length; i = i + size) {
+    result.push(arr.slice(i, i + size));
+  }
+  return result;
 }

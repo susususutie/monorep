@@ -1,8 +1,12 @@
 import { css } from "@emotion/css";
+import { Empty, TableProps } from "antd";
+import { useMemo } from "react";
 
 export type MatrixTableProps<RecordType extends Record<string, any> = any> = {
   borderRadius?: number;
   gap?: [number, number];
+  empty?: React.ReactNode | (() => React.ReactNode);
+
   dataSource?: RecordType[];
   columns?: {
     width?: number;
@@ -13,19 +17,24 @@ export type MatrixTableProps<RecordType extends Record<string, any> = any> = {
 };
 
 export default function MatrixTable(props: MatrixTableProps) {
-  const { borderRadius = 2, gap = [18, 0], dataSource = [], columns = [] } = props;
+  const { borderRadius = 2, gap = [18, 0], dataSource = [], columns = [], empty = <DefaultEmpty /> } = props;
 
   //   th     th     th
   //   th     td     td
-  const gapStyle = css`
-    padding: ${gap[1] / 2}px ${gap[0] / 2}px;
-  `;
-
-  const td = css`
-    height: 100%;
-    border: 1px solid #e6e9f0;
-    border-top-style: ${gap[1] === 0 ? "none" : "solid"};
-  `;
+  const gapStyle = useMemo(
+    () => css`
+      padding: ${gap[1] / 2}px ${gap[0] / 2}px;
+    `,
+    [gap[0], gap[1]]
+  );
+  const td = useMemo(
+    () => css`
+      height: 100%;
+      border: 1px solid #e6e9f0;
+      border-top-style: ${gap[1] === 0 ? "none" : "solid"};
+    `,
+    [gap[1]]
+  );
 
   return (
     <div>
@@ -73,8 +82,9 @@ export default function MatrixTable(props: MatrixTableProps) {
           {dataSource.map((row, rowIndex) => (
             <tr key={rowIndex}>
               {columns.map((column, colIndex) => {
-                const isNill = column.dataIndex === null || typeof column.dataIndex === "undefined";
-                const record = isNill ? row : row[column.dataIndex as keyof typeof row];
+                const record = row[column.dataIndex as keyof typeof row];
+                const item = typeof column?.render === "function" ? column.render(record, row, rowIndex) : record;
+                const isEmpty = item === null || typeof item === "undefined";
 
                 return (
                   <td key={colIndex} className={gapStyle}>
@@ -86,10 +96,12 @@ export default function MatrixTable(props: MatrixTableProps) {
                           rowIndex === dataSource.length - 1 && colIndex === columns.length - 1 ? borderRadius : 0,
                       }}
                     >
-                      {typeof column?.render === "function" ? (
-                        column.render(record, row, rowIndex)
+                      {["string", "number"].includes(typeof item) ? (
+                        <CenterTitle>{item}</CenterTitle>
+                      ) : isEmpty ? (
+                        empty
                       ) : (
-                        <CenterTh>{typeof record === "string" ? record : String(record)}</CenterTh>
+                        item
                       )}
                     </div>
                   </td>
@@ -117,7 +129,7 @@ export function PresetTitle({ children }: { children: string }) {
   return <div className={head}>{children}</div>;
 }
 
-const centerTh = css`
+const centerTitle = css`
   height: 100%;
   font-size: 14px;
   color: #38415c;
@@ -125,6 +137,20 @@ const centerTh = css`
   align-items: center;
   justify-content: center;
 `;
-function CenterTh({ children }: { children: string }) {
-  return <div className={centerTh}>{children}</div>;
+function CenterTitle({ children }: { children: string }) {
+  return <div className={centerTitle}>{children}</div>;
+}
+const emptyCls = css`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+function DefaultEmpty() {
+  return (
+    <div className={emptyCls}>
+      <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="暂无数据" style={{ margin: 0 }} />
+    </div>
+  );
 }

@@ -6,7 +6,7 @@ const paths = ["Arrow", "AsyncSelect", 'BarTitle', 'FlyLine', 'NodeTable'];
 const demoList = paths.map((path) => ({
   path,
   name: path,
-  Component: lazy(() => import(`../${path}/demo`)),
+  Component: lazy(() => import(`../${path}/demo.tsx`)),
 }));
 
 function App() {
