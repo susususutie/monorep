@@ -24,7 +24,7 @@ export type NodeTableProps<
 
 export default function NodeTable<UidType extends string | number = number>(props: NodeTableProps<UidType>) {
   const { align, columns, dataSource, renderItem } = props;
-  const groupAlign = align && ["left", "center"].includes(align) ? align : "center";
+  const groupAlign = align && ["left", "center"].includes(align) ? align : "left";
 
   // const [paddingTops, setPadding] = useState<number[]>([]);
   const renderColumns = columns.map((column, index) =>
