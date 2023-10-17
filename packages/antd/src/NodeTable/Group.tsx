@@ -1,17 +1,19 @@
 import { css } from "@emotion/css";
-import { Button } from "antd";
-import { Fragment, memo, useContext, useState } from "react";
-import { GetNodeDataContext } from "./context";
+import { Fragment } from "react";
 
-export default function Group<UidType extends string | number = number>({
+export default function NodeGroup<UidType extends string | number = number>({
   align,
+  rowSize,
+  colSize,
   items,
   renderItem,
   padding,
 }: {
   align: "left" | "center";
+  rowSize: number;
+  colSize: number;
   items: UidType[][];
-  renderItem: (config: { uid: UidType; row: number; col: number; rows: number; cols: number }) => React.ReactNode;
+  renderItem: (config: { uid: UidType; row: number; col: number; rowSize: number; colSize: number }) => React.ReactNode;
   padding?: number[];
 }) {
   return (
@@ -46,34 +48,27 @@ export default function Group<UidType extends string | number = number>({
         {items.map((list, listIndex) => (
           <div
             key={listIndex}
-            className={
-              list.length === 3
-                ? css`
-                    display: flex;
-                    flex-direction: row;
-                    flex-wrap: nowrap;
-                    justify-content: space-around;
-                    align-items: flex-start;
-                  `
-                : css`
-                    display: flex;
-                    flex-direction: row;
-                    flex-wrap: nowrap;
-                    justify-content: flex-start;
-                    align-items: flex-start;
-                    ::after {
-                      content: "";
-                      flex-grow: 1;
-                    }
-                  `
-            }
+            className={css`
+              display: flex;
+              flex-direction: row;
+              flex-wrap: nowrap;
+              justify-content: space-around;
+              align-items: flex-start;
+            `}
             style={{ paddingTop: 24 + (padding?.[listIndex] || 0) }}
           >
             {list.map((node, index) => (
-              <Fragment key={node}>
-                {renderItem({ uid: node, row: items.length, col: index, rows: items.length, cols: listIndex })}
-              </Fragment>
+              <Fragment key={node}>{renderItem({ uid: node, row: listIndex, col: index, rowSize, colSize })}</Fragment>
             ))}
+
+            {
+              // [x, x, _]
+              align === "left" && list.length < colSize
+                ? Array(colSize - list.length)
+                    .fill(null)
+                    .map((_, index) => <span key={index} style={{ display: "block", width: 64 }} />)
+                : null
+            }
           </div>
         ))}
       </div>

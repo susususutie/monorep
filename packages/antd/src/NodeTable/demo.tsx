@@ -2,60 +2,7 @@ import { Card } from "antd";
 import NodeTable from "./index";
 import { css } from "@emotion/css";
 import { useState } from "react";
-
-function Item({
-  uid,
-  data,
-  row,
-  col,
-  rows,
-  cols,
-}: {
-  uid: string;
-  data: any;
-  row: number;
-  col: number;
-  rows: number;
-  cols: number;
-}) {
-  if (uid === "") {
-    console.log("update node", data);
-  }
-
-  return (
-    <span>
-      <span
-        className={css`
-          display: block;
-          margin: 0 8px;
-          width: 48px;
-          height: 48px;
-          background: #ffffff;
-          border: 1px solid #e6e9f0;
-          border-radius: 2px;
-          box-shadow: 0px 2px 4px 0px rgba(56, 65, 92, 0.08);
-        `}
-      />
-      <span
-        className={css`
-          display: block;
-          margin-top: 8px;
-          width: 64px;
-          height: 40px;
-          font-size: 12px;
-          font-family: PingFang SC, PingFang SC-Regular;
-          font-weight: 400;
-          text-align: center;
-          color: #38415c;
-          line-height: 20px;
-          overflow: hidden;
-        `}
-      >
-        {data?.name}
-      </span>
-    </span>
-  );
-}
+import { NodeData, NodeItem } from "./NodeItem";
 
 const MOCK = {
   classifies: [
@@ -718,33 +665,56 @@ function sliceArray(arr: any[], size = 3) {
 }
 
 export default function Demo() {
-  const [nodes, setNodes] = useState(MOCK.classifies.flatMap((item) => item.assets));
+  const [nodes, setNodes] = useState<NodeData[]>(MOCK.classifies.flatMap((item) => item.assets) as NodeData[]);
   const columns = [
     { title: "类型", width: 190, dataIndex: "type" },
     ...MOCK.data_centers.map((item) => ({ title: item.name, dataIndex: `dataCenter${item.id}` })),
   ];
 
   const [dataSource, setDataSource] = useState<
-    { key: number; type: string; [dataCenter: `dataCenter${number}`]: string[][] }[]
+    {
+      key: number;
+      type: string;
+      padding?: number[];
+      rowSize: number;
+      colSize: number;
+      [dataCenter: `dataCenter${number}`]: string[][];
+    }[]
   >(() => {
-    return MOCK.classifies.map((item) => {
-      const dataCenters = MOCK.data_centers.reduce(
-        (res, center) => ({
+    const dataCenters = MOCK.data_centers;
+
+    // 每行展示几个节点, 一列时每行十个, 两列时每行五个, 三列时每行三个
+    const colSize = dataCenters.length > 0 ? Math.floor(10 / dataCenters.length) : 3;
+
+    const result = MOCK.classifies.map((item) => {
+      let rowSize = 1;
+      const obj = dataCenters.reduce((res, center) => {
+        const dataCenterName = `dataCenter${center.id}`;
+        const dataCenterNodes = item.assets
+          .filter((node) => node.data_center_id === center.id)
+          .map((node) => node.unique_key);
+        const dataCenterRowSize = Math.ceil(dataCenterNodes.length / colSize);
+        if (dataCenterRowSize > rowSize) {
+          rowSize = dataCenterRowSize;
+        }
+        return {
           ...res,
-          padding: [],
-          [`dataCenter${center.id}`]: sliceArray(
-            item.assets.filter((node) => node.data_center_id === center.id).map((node) => node.unique_key),
-            2
-          ),
-        }),
-        {}
-      );
+          [dataCenterName]: sliceArray(dataCenterNodes, colSize),
+        };
+      }, {});
+
       return {
         key: item.id,
         type: item.name,
-        ...dataCenters,
+        padding: [10, 2],
+        colSize,
+        rowSize,
+        ...obj,
       };
     });
+
+    console.log(result);
+    return result;
   });
 
   return (
@@ -752,7 +722,7 @@ export default function Demo() {
       <NodeTable<string>
         columns={columns}
         dataSource={dataSource}
-        renderItem={(config) => <Item {...config} data={nodes.find((node) => node.unique_key === config.uid)} />}
+        renderItem={(config) => <NodeItem {...config} data={nodes.find((node) => node.unique_key === config.uid)!} />}
       />
     </Card>
   );

@@ -29,5 +29,8 @@
     "react-dom": "^18.2.0",
     "typescript": "^4.9.5",
     "vite": "^4.4.11"
+  },
+  "dependencies": {
+    "ahooks": "^3.7.8"
   }
 }
