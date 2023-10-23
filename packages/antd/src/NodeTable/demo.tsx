@@ -1,7 +1,7 @@
 import { Card } from "antd";
 import NodeTable from "./index";
 import { css } from "@emotion/css";
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { NodeData, NodeItem } from "./NodeItem";
 
 const MOCK = {
@@ -666,10 +666,7 @@ function sliceArray(arr: any[], size = 3) {
 
 export default function Demo() {
   const [nodes, setNodes] = useState<NodeData[]>(MOCK.classifies.flatMap((item) => item.assets) as NodeData[]);
-  const columns = [
-    { title: "类型", width: 190, dataIndex: "type" },
-    ...MOCK.data_centers.map((item) => ({ title: item.name, dataIndex: `dataCenter${item.id}` })),
-  ];
+  const columns =  MOCK.data_centers.map((item) => ({ title: item.name, dataIndex: `dataCenter${item.id}` }))
 
   const [dataSource, setDataSource] = useState<
     {
@@ -719,11 +716,7 @@ export default function Demo() {
 
   return (
     <Card title="特定布局的节点组件">
-      <NodeTable<string>
-        columns={columns}
-        dataSource={dataSource}
-        renderItem={(config) => <NodeItem {...config} data={nodes.find((node) => node.unique_key === config.uid)!} />}
-      />
+      <NodeTable nodes={nodes} columns={columns} dataSource={dataSource} />
     </Card>
   );
 }

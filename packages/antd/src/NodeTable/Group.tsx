@@ -12,7 +12,7 @@ export default function NodeGroup<UidType extends string | number = number>({
   align: "left" | "center";
   rowSize: number;
   colSize: number;
-  items: UidType[][];
+  items?: UidType[][];
   renderItem: (config: { uid: UidType; row: number; col: number; rowSize: number; colSize: number }) => React.ReactNode;
   padding?: number[];
 }) {
@@ -45,7 +45,7 @@ export default function NodeGroup<UidType extends string | number = number>({
           padding-bottom: 12px;
         `}
       >
-        {items.map((list, listIndex) => (
+        {items?.map((list, listIndex) => (
           <div
             key={listIndex}
             className={css`

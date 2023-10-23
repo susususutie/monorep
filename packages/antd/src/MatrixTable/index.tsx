@@ -16,7 +16,7 @@ export type MatrixTableProps<RecordType extends Record<string, any> = any> = {
   dataSource?: RecordType[];
   columns?: {
     width?: number;
-    title: React.ReactNode | (() => React.ReactNode);
+    title?: React.ReactNode | (() => React.ReactNode);
     dataIndex?: string;
     render?: (text: any, row: RecordType, rowIndex: number) => React.ReactNode;
   }[];
