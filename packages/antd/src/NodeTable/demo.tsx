@@ -651,9 +651,9 @@ const MOCK = {
     },
   ],
   data_centers: [
-    { id: 13, name: "生产中心" },
+    // { id: 13, name: "生产中心" },
     { id: 1, name: "生产数据中心" },
-    { id: 10, name: "灾备数据中心2" },
+    // { id: 10, name: "灾备数据中心2" },
   ],
 };
 function sliceArray(arr: any[], size = 3) {

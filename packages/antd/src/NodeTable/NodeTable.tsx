@@ -54,6 +54,7 @@ export default function NodeTable(props: NodeTableProps) {
             renderItem={(config) => (
               <NodeItem
                 {...config}
+                isBig
                 data={nodes.find((node) => node.unique_key === config.uid)!}
                 onClick={clickItem}
                 isActive={config.uid === activeNode}
