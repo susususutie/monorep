@@ -68,6 +68,7 @@ export default function MatrixTable<RecordType extends Record<string, any> = any
               <th key={index} className={gapStyle}>
                 <div
                   style={{
+                    overflow: borderRadius ? "hidden" : undefined,
                     border: "1px solid #e6e9f0",
                     borderTopLeftRadius: index === 0 ? borderRadius : 0,
                     borderTopRightRadius: index === columns.length - 1 ? borderRadius : 0,
@@ -102,6 +103,7 @@ export default function MatrixTable<RecordType extends Record<string, any> = any
                         borderBottomLeftRadius: rowIndex === dataSource.length - 1 ? borderRadius : 0,
                         borderBottomRightRadius:
                           rowIndex === dataSource.length - 1 && colIndex === columns.length - 1 ? borderRadius : 0,
+                        overflow: borderRadius ? "hidden" : undefined,
                       }}
                     >
                       {["string", "number"].includes(typeof item) ? (
