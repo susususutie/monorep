@@ -55,7 +55,7 @@ export default function NodeGroup<UidType extends string | number = number>({
               justify-content: space-around;
               align-items: flex-start;
             `}
-            style={{ paddingTop: 24 + (padding?.[listIndex] || 0) }}
+            style={{ paddingTop: padding?.[listIndex] || 24 }}
           >
             {list.map((node, index) => (
               <Fragment key={node}>{renderItem({ uid: node, row: listIndex, col: index, rowSize, colSize })}</Fragment>

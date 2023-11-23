@@ -1,19 +1,22 @@
-import React, { ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import React, { CSSProperties, ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import MatrixTable from "../MatrixTable";
 import NodeGroup from "./Group";
 import { NodeItem } from "./NodeItem";
 import { css } from "@emotion/css";
+import { useClickAway } from "ahooks";
 
 export type NodeTableProps = {
+  style?: CSSProperties;
   nodes: any[];
   columns: { key?: React.Key; title: string; dataIndex: string }[];
   dataSource: DataSourceItem[];
+  align?: "left" | "center";
 };
 
 // 弧高 = (index + 1) * 8; index: 同一行中的第几条水平连线
 
 export default function NodeTable(props: NodeTableProps) {
-  const { nodes = [], columns, dataSource } = props;
+  const { style, align = "left", nodes = [], columns, dataSource } = props;
 
   const wrapper = useRef<HTMLDivElement>(null);
   const [activeNode, setActiveNode] = useState<string>();
@@ -43,7 +46,7 @@ export default function NodeTable(props: NodeTableProps) {
       render: (items: string[][], row: DataSourceItem) =>
         items?.length > 0 ? (
           <NodeGroup
-            align={"left"}
+            align={align}
             rowSize={row.rowSize}
             colSize={row.colSize}
             items={items}
@@ -61,17 +64,23 @@ export default function NodeTable(props: NodeTableProps) {
     })),
   ];
 
+  function onClickAway() {
+    setActiveNode(undefined);
+    setModalState((oldState) => ({ ...oldState, open: false }));
+  }
+  useClickAway(() => {
+    onClickAway();
+  }, [wrapper]);
+
   return (
     <div
       ref={wrapper}
-      style={{ position: "relative" }}
+      style={{ ...style, position: "relative" }}
       onClick={(ev) => {
         const nodes = [...(wrapper.current?.querySelectorAll(`[data-node-nid]`) ?? [])];
         const clickOnNode = nodes.some((node) => node.contains(ev.target as HTMLElement));
         if (!clickOnNode) {
-          setActiveNode(undefined);
-          setModalState((oldState) => ({ ...oldState, open: false }));
-          console.log("click away");
+          onClickAway();
         }
       }}
     >

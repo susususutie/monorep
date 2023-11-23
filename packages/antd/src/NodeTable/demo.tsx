@@ -1,4 +1,4 @@
-import { Card } from "antd";
+import { Card, Form, Radio, Segmented, Space, Switch } from "antd";
 import NodeTable from "./index";
 import { css } from "@emotion/css";
 import { useCallback, useRef, useState } from "react";
@@ -666,7 +666,7 @@ function sliceArray(arr: any[], size = 3) {
 
 export default function Demo() {
   const [nodes, setNodes] = useState<NodeData[]>(MOCK.classifies.flatMap((item) => item.assets) as NodeData[]);
-  const columns =  MOCK.data_centers.map((item) => ({ title: item.name, dataIndex: `dataCenter${item.id}` }))
+  const columns = MOCK.data_centers.map((item) => ({ title: item.name, dataIndex: `dataCenter${item.id}` }));
 
   const [dataSource, setDataSource] = useState<
     {
@@ -703,7 +703,14 @@ export default function Demo() {
       return {
         key: item.id,
         type: item.name,
-        padding: [10, 2],
+        padding: [
+          getPaddingTop(0),
+          getPaddingTop(1),
+          getPaddingTop(2),
+          getPaddingTop(3),
+          getPaddingTop(4),
+          getPaddingTop(5),
+        ],
         colSize,
         rowSize,
         ...obj,
@@ -714,9 +721,24 @@ export default function Demo() {
     return result;
   });
 
+  const [align, setValue] = useState<"left" | "center">("left");
+
   return (
     <Card title="特定布局的节点组件">
-      <NodeTable nodes={nodes} columns={columns} dataSource={dataSource} />
+      <Space direction="vertical">
+        <Form.Item label="align">
+          <Segmented options={["left", "center"]} value={align} onChange={setValue} />
+        </Form.Item>
+      </Space>
+
+      <NodeTable style={{ marginTop: 24 }} nodes={nodes} columns={columns} dataSource={dataSource} align={align} />
     </Card>
   );
+}
+
+function getPaddingTop(lines: number) {
+  if (!lines || lines <= 0) {
+    return 24;
+  }
+  return 24 + 16 + 8 * (lines - 1);
 }

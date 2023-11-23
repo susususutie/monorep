@@ -1,5 +1,5 @@
 import { css } from "@emotion/css";
-import { useClickAway, useHover } from "ahooks";
+import { useHover } from "ahooks";
 import { Popover } from "antd";
 import { useRef } from "react";
 
@@ -29,9 +29,6 @@ export function NodeItem({
 }) {
   const nodeRef = useRef(null);
   const isHover = useHover(nodeRef);
-  useClickAway(() => {
-    // onClick?.();
-  }, [nodeRef]);
 
   return (
     <span>
