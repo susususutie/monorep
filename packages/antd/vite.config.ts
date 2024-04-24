@@ -1,9 +1,11 @@
 import { defineConfig } from 'vite'
-import { resolve, dirname } from 'path'
+import { resolve } from 'node:path'
 import react from '@vitejs/plugin-react-swc'
-import { fileURLToPath } from 'url'
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+// 安装 `@types/node` 后就不会报 `找不到__dirname` 的错误, 也可通过以下代码自己实现 __dirname 
+// import { dirname } from 'node:path'
+// import { fileURLToPath } from 'node:url'
+// const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,9 +20,9 @@ export default defineConfig({
     lib: {
       // Could also be a dictionary or array of multiple entry points
       entry: resolve(__dirname, 'src/index.ts'),
-      name: 'MyLib',
+      name: 'SutieAntd',
       // the proper extensions will be added
-      fileName: 'my-lib',
+      fileName: 'sutie-antd',
     },
     rollupOptions: {
       external: ['react', 'react-dom', 'antd', 'ahooks', '@emotion/css', 'react/jsx-runtime'],
@@ -35,6 +37,5 @@ export default defineConfig({
         }
       }
     },
-    
   },
 })
