@@ -727,7 +727,7 @@ export default function Demo() {
     <Card title="特定布局的节点组件">
       <Space direction="vertical">
         <Form.Item label="align">
-          <Segmented options={["left", "center"]} value={align} onChange={setValue} />
+          <Segmented options={["left", "center"]} value={align} onChange={(v) => setValue(v as "left" | "center")} />
         </Form.Item>
       </Space>
 

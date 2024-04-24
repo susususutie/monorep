@@ -67,7 +67,7 @@ function InternalFlyLine<LineData = any>(props: FlyLineProps<LineData>) {
   memoOnHover.current = onHover;
   useEffect(() => {
     let hoverUid: string | null | undefined;
-    let delayLeaveTimer: number;
+    let delayLeaveTimer: NodeJS.Timeout;
     function onHoverStart(e: MouseEvent) {
       if (
         !e.target ||

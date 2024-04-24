@@ -2,6 +2,7 @@ import { css } from "@emotion/css";
 import { Typography, theme } from "antd";
 import { BaseType } from "antd/es/typography/Base";
 import { TitleProps } from "antd/es/typography/Title";
+import cls from './index.module.css';
 
 export type BarTitleProps = TitleProps & { color?: string };
 
@@ -33,7 +34,7 @@ export default function BarTitle(props: BarTitleProps) {
           background-color: ${iColor};
           border-radius: 2px;
         }
-      `}${className ? " " + className : ""}`}
+      `}${className ? " " + className : ""} ${cls.title}`}
     />
   );
 }

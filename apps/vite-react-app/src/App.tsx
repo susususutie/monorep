@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { ConfigProvider, Form, Input, Row, Space } from "antd";
-import { Arrow, AsyncSelect, ComponentPanel, MyButton, MyTitle } from "@sutie/antd";
+import { Arrow, AsyncSelect, ComponentPanel, MyButton, BarTitle } from "@sutie/antd";
 
-function App() { 
+function App() {
   const [prefixCls, setPrefixCls] = useState<string>("antd");
 
   return (
@@ -69,7 +69,7 @@ function App() {
         </ComponentPanel>
 
         <ComponentPanel title="Template" extra="自定义组件示例">
-          <MyTitle />
+          <BarTitle />
         </ComponentPanel>
       </Row>
     </ConfigProvider>

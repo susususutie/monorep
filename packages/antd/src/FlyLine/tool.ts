@@ -11,7 +11,7 @@ export function debounce(
     onStartDebounce?: () => void;
   }
 ): (...params: any[]) => void {
-  let timer: number;
+  let timer: NodeJS.Timeout;
 
   const { delay = 300, onStartDebounce } = options || {};
   let { runFirstFn = true } = options || {};
