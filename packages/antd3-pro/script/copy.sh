@@ -4,7 +4,7 @@
 # cd "$script_dir"
 
 # 定义源目录和目标目录
-src_dir="src"
+src_dir="lib"
 
 # 获取第一个参数(目标目录)
 dist_dir_input="$1"
@@ -29,7 +29,7 @@ for dir in "$src_dir"/*; do
         mkdir -p "$dist_dir/$subdir_name"
 
         # 复制源子目录下的 svg 和 png 文件到目标子目录
-        cp -r "$dir"/*.{svg,png,module.css} "$dist_dir/$subdir_name/" 2>/dev/null
+        cp -r "$dir"/*.{svg,png,css,module.css} "$dist_dir/$subdir_name/" 2>/dev/null
     fi
 done
 

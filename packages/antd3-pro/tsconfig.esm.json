@@ -19,5 +19,6 @@
       "react-dom": ["./node_modules/@types/react-dom"]
     }
   },
-  "include": ["src/index.ts", "src/global.d.ts"]
+  "include": ["lib/index.ts", "global.d.ts"],
+  "exclude": ["src"]
 }
