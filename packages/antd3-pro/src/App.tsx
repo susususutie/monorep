@@ -1,8 +1,6 @@
-import  { useState } from 'react'
-import './App.css'
-import { MyButton } from '../lib'
 import { Button } from 'antd'
-import 'antd/dist/antd.css'
+import { useState } from 'react'
+import { MyButton } from '../lib'
 
 function App() {
   const [count, setCount] = useState(0)

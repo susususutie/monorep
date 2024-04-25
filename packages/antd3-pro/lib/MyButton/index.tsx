@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import { ButtonProps } from "antd/lib/button";
+import { ButtonProps } from "antd/es/button";
 import React from "react";
 import icon from './react.svg'
 import cls from './index.module.css'
