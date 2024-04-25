@@ -8,10 +8,10 @@
   "scripts": {
     "dev": "vite",
     "preview": "vite preview",
-    "build:dist": "tsc && vite build",
-    "build": "pnpm run build:esm && pnpm run build:cjs",
+    "build": "pnpm run build:esm && pnpm run build:cjs && pnpm run build:dist",
     "build:esm": "rm -rf ./esm && bash ./script/copy.sh esm && tsc -p tsconfig.esm.json",
-    "build:cjs": "rm -rf ./cjs && bash ./script/copy.sh cjs && tsc -p tsconfig.cjs.json"
+    "build:cjs": "rm -rf ./cjs && bash ./script/copy.sh cjs && tsc -p tsconfig.cjs.json",
+    "build:dist": "tsc && vite build"
   },
   "keywords": [],
   "author": "",

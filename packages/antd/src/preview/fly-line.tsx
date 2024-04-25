@@ -1,7 +1,8 @@
-import { Card, Divider, Form, Slider, Space, Typography } from "antd";
-import FlyLine, { FlyLineProps, useResize, getLineAnchor } from "./index";
-import { useEffect, useRef, useState } from "react";
 import { css } from "@emotion/css";
+import { Card, Divider, Form, Slider, Typography } from "antd";
+import { useEffect, useRef, useState } from "react";
+import type { FlyLineProps } from "../../lib";
+import { FlyLine, getLineAnchor, useResize } from "../../lib";
 
 function createLines(options?: { start?: string; w?: number; h?: number }) {
   const { start, w = 800, h = 800 } = options ?? {};

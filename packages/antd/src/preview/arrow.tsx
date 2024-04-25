@@ -1,5 +1,5 @@
 import { Card, Divider, Space, Typography } from "antd";
-import Arrow from "./index";
+import { Arrow } from "../../lib";
 
 export default function Demo() {
   return (

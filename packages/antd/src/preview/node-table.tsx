@@ -1,8 +1,7 @@
-import { Card, Form, Radio, Segmented, Space, Switch } from "antd";
-import NodeTable from "./index";
-import { css } from "@emotion/css";
-import { useCallback, useRef, useState } from "react";
-import { NodeData, NodeItem } from "./NodeItem";
+import { Card, Form, Segmented, Space } from "antd";
+import { useState } from "react";
+import { NodeTable } from "../../lib";
+import type { NodeData } from "../../lib/NodeTable/NodeItem";
 
 const MOCK = {
   classifies: [

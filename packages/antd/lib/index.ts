@@ -5,7 +5,8 @@ export { default as AsyncSelect } from "./AsyncSelect";
 export type { AsyncSelectProps } from "./AsyncSelect";
 export { default as ComponentPanel } from "./ComponentPanel";
 export type { ComponentPanelProps } from "./ComponentPanel";
-export { default as FlyLine } from "./FlyLine";
+export { default as FlyLine, useResize, getLineAnchor } from "./FlyLine";
+export type { FlyLineProps } from './FlyLine'
 export { default as MatrixTable } from "./MatrixTable";
 export type { MatrixTableProps } from "./MatrixTable";
 export { default as MyButton } from "./MyButton";

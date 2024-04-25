@@ -1,6 +1,6 @@
 import { Card, Form, Radio, Slider, Space } from "antd";
 import { useState } from "react";
-import MatrixTable from ".";
+import { MatrixTable } from "../../lib";
 
 export default function Demo() {
   const [groupGap, setGroupGap] = useState<[number, number]>([18, 18]);

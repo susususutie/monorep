@@ -4,7 +4,7 @@
 # cd "$script_dir"
 
 # 定义源目录和目标目录
-src_dir="src"
+src_dir="lib"
 
 # 获取第一个参数(目标目录)
 dist_dir_input="$1"

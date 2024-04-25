@@ -1,5 +1,5 @@
 import { Card, Divider, Space, Typography } from "antd";
-import AsyncSelect from "./index";
+import { AsyncSelect } from "../../lib";
 
 export default function Demo() {
   return (

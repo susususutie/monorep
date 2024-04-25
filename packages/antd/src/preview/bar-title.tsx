@@ -1,5 +1,5 @@
 import { Card, Divider, Space, Typography } from "antd";
-import BarTitle from "./index";
+import { BarTitle } from "../../lib";
 
 export default function Demo() {
   return (
