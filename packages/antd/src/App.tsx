@@ -1,9 +1,11 @@
 import { ConfigProvider, Form, FormProps, Input, Layout, theme } from "antd";
 import { useState } from "react";
+import { defaultCounter } from '@sutie/demo/counter'
 
 function App() {
   // const { getPrefixCls } = useContext(ConfigProvider.ConfigContext);
   // const renderPrefixCls = getPrefixCls();
+  console.log(defaultCounter)
 
   const [prefixCls, setPrefixCls] = useState<string>("antd");
   const onFinish: NonNullable<FormProps<{ prefixCls: string }>["onFinish"]> = (values) => {

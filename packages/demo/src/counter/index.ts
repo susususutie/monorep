@@ -1,4 +1,5 @@
 import {defaultCounter} from './defaultCounter'
+export { defaultCounter }
 
 export function setupCounter(element: SetUpCountProps) {
   let counter = defaultCounter

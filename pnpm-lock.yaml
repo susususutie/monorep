@@ -62,6 +62,9 @@ importers:
       '@emotion/css':
         specifier: ^11.11.2
         version: 11.11.2
+      '@sutie/demo':
+        specifier: workspace:*
+        version: link:../demo
       '@types/node':
         specifier: ^20.12.7
         version: 20.12.7
