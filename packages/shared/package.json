@@ -4,7 +4,7 @@
   "private": true,
   "description": "",
   "scripts": {
-    "prepare": "pnpm run build",
+    "prepare": "corepack pnpm run build",
     "dev": "tsup --watch",
     "build": "tsup"
   },
