@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "build-all": "pnpm -r build",
-    "build:react": "pnpm -r --filter react-* build"
+    "build-all": "corepack pnpm -r build",
+    "build:react": "corepack pnpm -r --filter react-* build"
   },
   "devDependencies": {},
   "engines": {
