@@ -17,25 +17,25 @@
   "author": "",
   "license": "ISC",
   "peerDependencies": {
-    "@emotion/css": "^11.11.2",
-    "ahooks": "^3.7.8",
-    "antd": "^5.4.6",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "@sutie/demo": "workspace:*"
+    "@emotion/css": "^11.13.0",
+    "@sutie/demo": "workspace:*",
+    "ahooks": "^3.8.0",
+    "antd": "^5.19.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@emotion/css": "^11.11.2",
-    "@types/node": "^20.12.7",
-    "@types/react": "^18.2.25",
-    "@types/react-dom": "^18.2.11",
-    "@vitejs/plugin-react-swc": "^3.4.0",
-    "ahooks": "^3.7.8",
-    "antd": "^5.4.6",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "@emotion/css": "^11.13.0",
+    "@sutie/demo": "workspace:*",
+    "@types/node": "^20.14.11",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react-swc": "^3.7.0",
+    "ahooks": "^3.8.0",
+    "antd": "^5.19.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "typescript": "^4.9.5",
-    "vite": "^4.4.11",
-    "@sutie/demo": "workspace:*"
+    "vite": "^4.5.3"
   }
 }
