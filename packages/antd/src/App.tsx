@@ -1,75 +1,50 @@
-import { Button, Card, ConfigProvider, Form, FormProps, Input, ColorPicker, Layout, Slider, theme } from "antd";
-import { Color } from "antd/es/color-picker";
+import { Collapse, ConfigProvider, Layout } from "antd";
 import { useState } from "react";
+import FormRootConfig, { type FormRootConfigValues } from "./config/FormRootConfig";
+import FormSeedToken, { type FormSeedTokenValues } from "./config/FormSeedToken";
+import PreviewContent from "./preview";
+
+const defaultRootConfig: FormRootConfigValues = { prefixCls: "antd" };
+const defaultSeedToken: FormSeedTokenValues = { colorPrimary: "#00b96b", borderRadius: 6 };
 
 function App() {
-  // const { getPrefixCls } = useContext(ConfigProvider.ConfigContext);
-  // const renderPrefixCls = getPrefixCls();
-
-  const [prefixCls, setPrefixCls] = useState<string>("antd");
-  const onFinish: NonNullable<FormProps<{ prefixCls: string }>["onFinish"]> = (values) => {
-    setPrefixCls(values.prefixCls);
-  };
-
-  const { token } = theme.useToken();
-  const [seedToken, setSeedToken] = useState({ colorPrimary: "#00b96b", borderRadius: 6 });
+  const [rootConfig, setRootConfig] = useState<FormRootConfigValues>(defaultRootConfig);
+  const [seedToken, setSeedToken] = useState<FormSeedTokenValues>(defaultSeedToken);
 
   return (
-    <ConfigProvider
-      prefixCls={prefixCls}
-      theme={{
-        token: {
-          ...seedToken,
-        },
-      }}
-    >
+    <ConfigProvider prefixCls={rootConfig.prefixCls} theme={{ token: { ...seedToken } }}>
       <Layout style={{ overflow: "hidden", height: "100%" }}>
         <Layout.Sider width={400} theme="light" style={{ padding: 12 }}>
-          <Card title="antd全局配置">
-            <Form layout="vertical" initialValues={{ prefixCls: "antd" }} onFinish={onFinish}>
-              <Form.Item name="prefixCls" required label="prefixCls" rules={[{ required: true }, { pattern: /^\w+$/ }]}>
-                <Input style={{ width: "100%" }} placeholder="更改配置,观察自定义组件是否同步变更" />
-              </Form.Item>
-              <Form.Item>
-                <Button htmlType="submit" type="primary">
-                  submit
-                </Button>
-              </Form.Item>
-            </Form>
-          </Card>
-          <Card title="SeedToken">
-            <Form
-              layout="vertical"
-              initialValues={seedToken}
-              onFinish={(values) => {
-                Object.keys(values).map((key) => {
-                  if (values[key] && typeof values[key] === "object") {
-                    values[key] = (values[key] as Color).toHexString();
-                  }
-                });
-
-                setSeedToken(values);
-              }}
-            >
-              <Form.Item name="colorPrimary" required label="colorPrimary">
-                <ColorPicker showText />
-              </Form.Item>
-              <Form.Item name="borderRadius" required label="borderRadius">
-                <Slider min={0} max={24} />
-              </Form.Item>
-              <Form.Item>
-                <Button htmlType="submit" type="primary">
-                  submit
-                </Button>
-              </Form.Item>
-            </Form>
-          </Card>
+          <Collapse
+            defaultActiveKey={[1, 2]}
+            items={[
+              {
+                key: 1,
+                label: "prefixCls",
+                children: (
+                  <FormRootConfig
+                    initialValues={defaultRootConfig}
+                    onReset={() => setRootConfig(defaultRootConfig)}
+                    onFinish={(values) => setRootConfig(values)}
+                  />
+                ),
+              },
+              {
+                key: 2,
+                label: "SeedToken",
+                children: (
+                  <FormSeedToken
+                    initialValues={defaultSeedToken}
+                    onReset={() => setSeedToken(defaultSeedToken)}
+                    onFinish={(values) => setSeedToken(values)}
+                  />
+                ),
+              },
+            ]}
+          />
         </Layout.Sider>
-        <Layout.Content style={{ overflow: "auto" }}>
-          <div style={{ height: "200vh" }}>
-            Layout.Content
-            {JSON.stringify(seedToken, null, 2)}
-          </div>
+        <Layout.Content style={{ overflow: "auto", padding: 12, backgroundColor: "#fff" }}>
+          <PreviewContent />
         </Layout.Content>
       </Layout>
     </ConfigProvider>

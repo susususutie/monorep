@@ -5,13 +5,7 @@ import point from "./point.svg";
 import Group from "./Group";
 
 export type ArrowDirection = "left" | "right";
-export type ArrowColor =
-  | "primary"
-  | "default"
-  | "success"
-  | "warning"
-  | "error"
-  | "disabled";
+export type ArrowColor = "primary" | "default" | "success" | "warning" | "error" | "disabled";
 export type ArrowProps = {
   animation?: boolean;
   direction?: ArrowDirection;
@@ -28,36 +22,23 @@ to {
 }`;
 
 function ArrowComp(props: ArrowProps) {
-  const {
-    direction = "right",
-    animation,
-    color = "default",
-    className,
-  } = props;
+  const { direction = "right", animation, color = "default", className } = props;
 
   const cls = useStyle({ color, direction });
 
   return (
     <span className={cx(cls.wrap, className)}>
-      <span className={cls.shaft}>
-        {animation ? <span className={cls.ani} /> : null}
-      </span>
+      <span className={cls.shaft}>{animation ? <span className={cls.ani} /> : null}</span>
       <span className={cls.arrow} />
     </span>
   );
 }
 
-function useStyle({
-  color,
-  direction,
-}: {
-  color: ArrowColor;
-  direction: ArrowDirection;
-}) {
+function useStyle({ color, direction }: { color: ArrowColor; direction: ArrowDirection }) {
   const { token } = theme.useToken();
   const COLOR_MAP: Record<ArrowColor, CSSProperties["color"]> = {
     primary: token.colorPrimary,
-    default: "#e6e9f0", // ?
+    default: token.colorTextBase,
     success: token.colorSuccess,
     warning: token.colorWarning,
     error: token.colorError,
@@ -80,7 +61,7 @@ function useStyle({
     background-color: ${COLOR_MAP[color]};
   `;
   const ani = css`
-    background-image: url('${point}');
+    background-image: url("${point}");
     background-repeat: repeat-x;
     width: 100%;
     height: 4px;

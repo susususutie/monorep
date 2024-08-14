@@ -1,4 +1,4 @@
-import { Card, Divider, Space, Typography } from "antd";
+import { Card, Form, Space, Typography } from "antd";
 import { Arrow } from "../../lib";
 
 export default function Demo() {
@@ -7,37 +7,34 @@ export default function Demo() {
       <Typography.Title level={3}>箭头组件</Typography.Title>
       <Typography.Paragraph>可自定义颜色及是否开启动画</Typography.Paragraph>
 
-      <Divider />
-
-      <Card title="direction控制方向">
+      <Card
+        title={
+          <>
+            <Typography.Text code>direction</Typography.Text>
+            <Typography.Text>控制方向</Typography.Text>
+          </>
+        }
+      >
         <Space direction="vertical">
           <Arrow direction="left" />
           <Arrow direction="right" />
         </Space>
       </Card>
 
-      <Divider />
-
       <Card title="color">
-        <Space direction="vertical">
-          <Arrow color="default" />
-          <Arrow color="disabled" />
-          <Arrow color="error" />
-          <Arrow color="primary" />
-          <Arrow color="success" />
-          <Arrow color="warning" />
-        </Space>
+        <Form.Item labelCol={{flex: '100px'}} label="default"><Arrow color="default" /></Form.Item>
+        <Form.Item labelCol={{flex: '100px'}} label="disabled"><Arrow color="disabled" /></Form.Item>
+        <Form.Item labelCol={{flex: '100px'}} label="error"><Arrow color="error" /></Form.Item>
+        <Form.Item labelCol={{flex: '100px'}} label="primary"><Arrow color="primary" /></Form.Item>
+        <Form.Item labelCol={{flex: '100px'}} label="success"><Arrow color="success" /></Form.Item>
+        <Form.Item labelCol={{flex: '100px'}} label="warning"><Arrow color="warning" /></Form.Item>
       </Card>
-
-      <Divider />
 
       <Card title="animation">
         <Space direction="vertical">
           <Arrow animation />
         </Space>
       </Card>
-
-      <Divider />
 
       <Card title="Group">
         <Space direction="horizontal">
