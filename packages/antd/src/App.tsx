@@ -5,14 +5,21 @@ import FormSeedToken, { type FormSeedTokenValues } from "./config/FormSeedToken"
 import PreviewContent from "./preview";
 
 const defaultRootConfig: FormRootConfigValues = { prefixCls: "antd" };
-const defaultSeedToken: FormSeedTokenValues = { colorPrimary: "#00b96b", borderRadius: 6 };
+const defaultSeedToken: FormSeedTokenValues = {
+  colorPrimary: "#1677ff",
+  colorSuccess: "#52c41a",
+  colorWarning: "#faad14",
+  colorError: "#ff4d4f",
+  colorInfo: "#1677ff",
+  borderRadius: 6,
+};
 
 function App() {
   const [rootConfig, setRootConfig] = useState<FormRootConfigValues>(defaultRootConfig);
   const [seedToken, setSeedToken] = useState<FormSeedTokenValues>(defaultSeedToken);
 
   return (
-    <ConfigProvider prefixCls={rootConfig.prefixCls} theme={{ token: { ...seedToken } }}>
+    <ConfigProvider prefixCls={rootConfig.prefixCls} theme={{ token: { ...seedToken }, cssVar: true }}>
       <Layout style={{ overflow: "hidden", height: "100%" }}>
         <Layout.Sider width={400} theme="light" style={{ padding: 12 }}>
           <Collapse

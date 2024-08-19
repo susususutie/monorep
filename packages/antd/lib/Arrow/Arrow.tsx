@@ -36,6 +36,7 @@ function ArrowComp(props: ArrowProps) {
 
 function useStyle({ color, direction }: { color: ArrowColor; direction: ArrowDirection }) {
   const { token } = theme.useToken();
+ 
   const COLOR_MAP: Record<ArrowColor, CSSProperties["color"]> = {
     primary: token.colorPrimary,
     default: token.colorTextBase,

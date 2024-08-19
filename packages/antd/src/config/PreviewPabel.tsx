@@ -11,10 +11,18 @@ export default function PreviewPabel(props: PreviewPabelProps) {
   return (
     <div style={{ display: "flex", gap: 16 }}>
       <section style={{ flex: "1 1 0" }}>
-        {items.map((item, index) => (index % 2 === 0 ? <CodeBox {...item} /> : null))}
+        {items
+          .filter((_, i) => i % 2 === 0)
+          .map((item) => (
+            <CodeBox {...item} key={item.key} />
+          ))}
       </section>
       <section style={{ flex: "1 1 0" }}>
-        {items.map((item, index) => (index % 2 === 1 ? <CodeBox {...item} /> : null))}
+        {items
+          .filter((_, i) => i % 2 === 1)
+          .map((item) => (
+            <CodeBox {...item} key={item.key} />
+          ))}
       </section>
     </div>
   );
