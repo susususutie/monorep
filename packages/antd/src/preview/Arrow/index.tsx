@@ -1,6 +1,5 @@
-import { Card, Form, Space, Typography } from "antd";
-import { Arrow } from "../../../lib";
-import CodeBox from "../../config/CodeBox";
+import { Typography } from "antd";
+import PreviewPabel from "../../config/PreviewPabel";
 
 export default function DemoArrow() {
   return (
@@ -8,65 +7,14 @@ export default function DemoArrow() {
       <Typography.Title level={3}>箭头组件</Typography.Title>
       <Typography.Paragraph>可自定义颜色及是否开启动画</Typography.Paragraph>
 
-      <div style={{ display: "flex", gap: 16 }}>
-        <section style={{ flex: "1 1 0" }}>
-          <CodeBox path="Arrow/direction" title="方向" description="direction参数控制箭头方向"></CodeBox>
-          <CodeBox path="Arrow/direction" title="颜色" description="color参数控制箭头颜色"></CodeBox>
-        </section>
-        <section style={{ flex: "1 1 0" }}></section>
-      </div>
-
-      <Card title="color">
-        <Form.Item labelCol={{ flex: "100px" }} label="default">
-          <Arrow color="default" />
-        </Form.Item>
-        <Form.Item labelCol={{ flex: "100px" }} label="disabled">
-          <Arrow color="disabled" />
-        </Form.Item>
-        <Form.Item labelCol={{ flex: "100px" }} label="error">
-          <Arrow color="error" />
-        </Form.Item>
-        <Form.Item labelCol={{ flex: "100px" }} label="primary">
-          <Arrow color="primary" />
-        </Form.Item>
-        <Form.Item labelCol={{ flex: "100px" }} label="success">
-          <Arrow color="success" />
-        </Form.Item>
-        <Form.Item labelCol={{ flex: "100px" }} label="warning">
-          <Arrow color="warning" />
-        </Form.Item>
-      </Card>
-
-      <Card title="animation">
-        <Space direction="vertical">
-          <Arrow animation />
-        </Space>
-      </Card>
-
-      <Card title="Group">
-        <Space direction="horizontal">
-          <Arrow.Group size="small">
-            small
-            <Arrow />
-            <Arrow />
-          </Arrow.Group>
-          <Arrow.Group size="default">
-            default
-            <Arrow />
-            <Arrow />
-          </Arrow.Group>
-          <Arrow.Group size="large">
-            large
-            <Arrow />
-            <Arrow />
-          </Arrow.Group>
-          <Arrow.Group size={10}>
-            10
-            <Arrow />
-            <Arrow />
-          </Arrow.Group>
-        </Space>
-      </Card>
+      <PreviewPabel
+        items={[
+          { key: 1, path: "Arrow/direction", title: "方向", description: "direction参数控制箭头方向" },
+          { key: 2, path: "Arrow/color", title: "颜色", description: "color参数控制箭头颜色" },
+          { key: 3, path: "Arrow/animation", title: "动画", description: "animation参数控制显示动画效果" },
+          { key: 4, path: "Arrow/group", title: "分组", description: "通过Group分组, 可将多个箭头堆叠" },
+        ]}
+      />
     </>
   );
 }

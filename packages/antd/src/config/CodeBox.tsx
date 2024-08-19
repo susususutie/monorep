@@ -1,8 +1,8 @@
 import { Tooltip, Typography } from "antd";
 import React, { useEffect, useState } from "react";
-import { CodeOutlined } from "@ant-design/icons";
+import {  JavaScriptOutlined } from "@ant-design/icons";
 
-type CodeBoxProps = {
+export type CodeBoxProps = {
   path: string;
   title: React.ReactNode;
   description?: React.ReactNode;
@@ -16,7 +16,7 @@ export default function CodeBox(props: CodeBoxProps) {
   const [code, setCode] = useState(false);
   useEffect(() => {
     import(`../preview/${path}`).then(({ default: App }) => setApp(App));
-    import(`../preview/${path}?row`).then(({ default: code }) => setCode(code));
+    import(`../preview/${path}?raw`).then(({ default: code }) => setCode(code));
   }, []);
 
   return (
@@ -66,7 +66,7 @@ export default function CodeBox(props: CodeBoxProps) {
           }}
         >
           <Tooltip title={expand ? "收起代码" : "显示代码"}>
-            <CodeOutlined onClick={() => setExpand(!expand)} />
+            <JavaScriptOutlined onClick={() => setExpand(!expand)} />
           </Tooltip>
         </div>
       </div>
