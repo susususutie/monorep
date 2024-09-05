@@ -1,6 +1,6 @@
 import { Tooltip, Typography } from "antd";
 import React, { useEffect, useState } from "react";
-import {  JavaScriptOutlined } from "@ant-design/icons";
+import { JavaScriptOutlined } from "@ant-design/icons";
 
 export type CodeBoxProps = {
   path: string;
@@ -15,8 +15,8 @@ export default function CodeBox(props: CodeBoxProps) {
   const [App, setApp] = useState(false);
   const [code, setCode] = useState(false);
   useEffect(() => {
-    import(`../preview/${path}`).then(({ default: App }) => setApp(App));
-    import(`../preview/${path}?raw`).then(({ default: code }) => setCode(code));
+    import(/* @vite-ignore */ `../preview/${path}`).then(({ default: App }) => setApp(App));
+    import(/* @vite-ignore */ `../preview/${path}?raw`).then(({ default: code }) => setCode(code));
   }, []);
 
   return (
