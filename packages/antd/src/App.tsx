@@ -3,6 +3,7 @@ import { useState } from "react";
 import FormRootConfig, { type FormRootConfigValues } from "./config/FormRootConfig";
 import FormSeedToken, { type FormSeedTokenValues } from "./config/FormSeedToken";
 import PreviewContent from "./preview";
+import { DialogTypeProvider } from "../lib";
 
 const defaultRootConfig: FormRootConfigValues = { prefixCls: "antd" };
 const defaultSeedToken: FormSeedTokenValues = {
@@ -52,7 +53,9 @@ function App() {
             />
           </Layout.Sider>
           <Layout.Content style={{ overflow: "auto", padding: 12, backgroundColor: "#fff" }}>
-            <PreviewContent />
+            <DialogTypeProvider dialogType="drawer">
+              <PreviewContent />
+            </DialogTypeProvider>
           </Layout.Content>
         </Layout>
       </AntdApp>

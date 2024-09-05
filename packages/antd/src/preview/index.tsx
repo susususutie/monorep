@@ -1,15 +1,4 @@
-import {
-  Alert,
-  App,
-  AutoComplete,
-  Badge,
-  Button,
-  Col,
-  Row,
-  Space,
-  Tag,
-  Typography
-} from "antd";
+import { Alert, App, AutoComplete, Badge, Button, Col, Row, Space, Tag, Typography } from "antd";
 import DemoArrow from "./Arrow";
 
 export default function PreviewContent() {
