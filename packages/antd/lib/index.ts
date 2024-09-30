@@ -17,3 +17,5 @@ export { default as NodeTable } from "./NodeTable";
 export type { NodeTableProps } from "./NodeTable";
 export { default as BarTitle } from "./BarTitle";
 export type { BarTitleProps as BarTitleProps } from "./BarTitle";
+export { default as FormItemPorts } from "./FormItems/FormItemPorts";
+export type { FormItemPortsProps as FormItemPortsProps } from "./FormItems/FormItemPorts";

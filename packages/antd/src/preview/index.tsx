@@ -1,5 +1,6 @@
 import { Alert, App, AutoComplete, Badge, Button, Card, Col, Divider, Flex, Row, Space, Tag, Typography } from "antd";
 import DemoArrow from "./Arrow";
+import DemoFormItemPorts from "./FormItems";
 import {
   CheckCircleOutlined,
   ClockCircleOutlined,
@@ -143,6 +144,7 @@ export default function PreviewContent() {
       </Row>
 
       <DemoArrow />
+      <DemoFormItemPorts />
     </>
   );
 }
