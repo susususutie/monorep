@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "dev:antd": "cd packages/antd && corepack pnpm dev",
     "build-all": "corepack pnpm -r build",
     "build:react": "corepack pnpm -r --filter react-* build"
   },

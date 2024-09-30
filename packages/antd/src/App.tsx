@@ -21,9 +21,9 @@ function App() {
 
   return (
     <ConfigProvider prefixCls={rootConfig.prefixCls} theme={{ token: { ...seedToken }, cssVar: true }}>
-      <AntdApp>
-        <Layout style={{ overflow: "hidden", height: "100%" }}>
-          <Layout.Sider width={400} theme="light" style={{ padding: 12 }}>
+      <AntdApp style={{ height: "100%" }}>
+        <Layout style={{ height: "100%" }}>
+          <Layout.Sider width={400} theme="light" style={{ padding: 12, overflowX: "hidden", overflowY: "auto" }}>
             <Collapse
               defaultActiveKey={[1, 2]}
               items={[
