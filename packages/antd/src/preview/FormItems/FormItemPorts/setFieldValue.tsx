@@ -3,11 +3,11 @@ import { Button, Form, Space } from "antd";
 import { FormItemPorts } from "../../../../lib";
 
 const App: React.FC = () => {
-  // TODO const [form] = Form.useForm();
+  const [form] = Form.useForm();
 
   return (
     <Form
-      // form={form}
+      form={form}
       name="FormItemPorts-setFieldValue"
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 16 }}
@@ -20,6 +20,18 @@ const App: React.FC = () => {
     >
       <FormItemPorts label="Ports" />
       <FormItemPorts names={{ ports: "myPorts" }} label="myPorts" />
+      <Form.Item label=" " colon={false}>
+        <Button
+          onClick={() =>
+            form.setFieldsValue({
+              ports: [8080],
+              myPorts: [1, 2],
+            })
+          }
+        >
+          设值
+        </Button>
+      </Form.Item>
       <Form.Item label=" " colon={false}>
         <Space>
           <Button htmlType="submit" type="primary">

@@ -1,11 +1,11 @@
 import React from "react";
 import CodeBox, { type CodeBoxProps } from "./CodeBox";
 
-type PreviewPabelProps = {
+type PreviewPanelProps = {
   items: (CodeBoxProps & { key: React.Key })[];
 };
 
-export default function PreviewPabel(props: PreviewPabelProps) {
+export default function PreviewPanel(props: PreviewPanelProps) {
   const { items } = props;
 
   return (

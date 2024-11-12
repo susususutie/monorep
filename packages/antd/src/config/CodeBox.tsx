@@ -1,22 +1,34 @@
+import { JavaScriptOutlined, Loading3QuartersOutlined } from "@ant-design/icons";
 import { Tooltip, Typography } from "antd";
-import React, { useEffect, useState } from "react";
-import { JavaScriptOutlined } from "@ant-design/icons";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 
 export type CodeBoxProps = {
-  path: string;
+  path?: string;
   title: React.ReactNode;
   description?: React.ReactNode;
-  children?: React.ReactNode;
+  component: () => Promise<any>;
+  originCode: () => Promise<any>;
 };
 export default function CodeBox(props: CodeBoxProps) {
-  const { path, title, description } = props;
+  const { path, title, description, component, originCode } = props;
+
   const [expand, setExpand] = useState(false);
 
-  const [App, setApp] = useState(false);
-  const [code, setCode] = useState(false);
+  const [App] = useState(() =>
+    component ? lazy(component) : lazy(() => import(/* @vite-ignore */ `../preview/${path}`))
+  );
+  const [loading, setLoading] = useState(false);
+  const [code, setCode] = useState();
   useEffect(() => {
-    import(/* @vite-ignore */ `../preview/${path}`).then(({ default: App }) => setApp(App));
-    import(/* @vite-ignore */ `../preview/${path}?raw`).then(({ default: code }) => setCode(code));
+    const loadCode = async (request: CodeBoxProps["originCode"]) => {
+      setLoading(true);
+      const res = await request();
+      setCode(res?.default ?? res);
+      setLoading(false);
+    };
+    if (typeof originCode === "function") {
+      loadCode(originCode);
+    }
   }, []);
 
   return (
@@ -42,7 +54,9 @@ export default function CodeBox(props: CodeBoxProps) {
           borderBottom: "1px solid rgba(5, 5, 5, 0.06)",
         }}
       >
-        {App}
+        <Suspense>
+          <App />
+        </Suspense>
       </section>
       <div
         className="mete"
@@ -72,7 +86,7 @@ export default function CodeBox(props: CodeBoxProps) {
       </div>
       {expand && (
         <div className="code" style={{ borderRadius: "0 0 6px 6px" }}>
-          <pre style={{ padding: "12px 16px" }}>{code}</pre>
+          {loading ? <Loading3QuartersOutlined /> : <pre style={{ padding: "12px 16px" }}>{code}</pre>}
         </div>
       )}
     </section>
