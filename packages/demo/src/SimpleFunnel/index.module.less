@@ -1,0 +1,47 @@
+.wrap {
+  padding: 2px 24px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+.item {
+  width: 100%;
+  flex: 1 1 100%;
+  position: relative;
+  overflow: hidden;
+
+  &:nth-of-type(1) {
+    color: #dedede;
+  }
+  &:nth-of-type(2) {
+    color: #b5d3ff;
+  }
+  &:nth-of-type(3) {
+    color: #3385ff;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+    path {
+      cursor: pointer;
+    }
+  }
+
+  .label {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    color: #38415c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    z-index: 1;
+    mix-blend-mode: multiply;
+  }
+}

@@ -40,5 +40,10 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.4.0"
-  }
+  },
+  "files":[
+    "cjs/",
+    "dist/",
+    "package.json"
+  ]
 }
